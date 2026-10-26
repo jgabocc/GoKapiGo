@@ -1,8 +1,8 @@
 [
   {"id": "aquasorting", "name": "Aqua Sorting", "package": "com.capibaragames.aquasorting", "repo": "AquaSort"},
-  {"id": "sudokumaster3000", "name": "Sudoku Master 3000", "package": "com.capibaragames.sudokumaster3000", "repo": "SUDOKUMASTER3000"},
-  {"id": "shapespin", "name": "Shape Spin", "package": "com.capibaragames.shapespin", "repo": "ShapeSpin"},
-  {"id": "parchisparty", "name": "Parchis Party", "package": "com.capibaragames.parchisparty", "repo": "Parchis-Party"},
+  {"id": "sudokumaster3000", "name": "Sudoku Master 3000", "package": "com.gokapigo.sudokumaster3000", "repo": "SUDOKUMASTER3000"},
+  {"id": "shapespin", "name": "Shape Spin", "package": "com.gokapigo.shapespin", "repo": "ShapeSpin"},
+  {"id": "parchisparty", "name": "Parchis Party", "package": "com.gokapigo.parchisparty", "repo": "Parchis-Party"},
   {"id": "colorblockslide", "name": "Color Block Slide", "package": "com.gokapigo.colorblockslide", "repo": "ColorBlockSlide"},
   {"id": "nutsboltssort", "name": "Nuts & Bolts Sort", "package": "com.gokapigo.nutsboltssort", "repo": "Nuts-Bolts-Sort"},
   {"id": "sandblockpuzzle", "name": "Sand Block Puzzle", "package": "com.gokapigo.sandblockpuzzle", "repo": "SandBlockPuzzle"},

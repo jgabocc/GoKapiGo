@@ -27,9 +27,9 @@ Para cambiar la portada: edita `landing/` (si cambia el paquete de un juego, cam
 | Juego | Paquete | Repo |
 |---|---|---|
 | Aqua Sorting | com.capibaragames.aquasorting | jgabocc/AquaSort |
-| Sudoku Master 3000 | com.capibaragames.sudokumaster3000 | jgabocc/SUDOKUMASTER3000 |
-| Shape Spin | com.capibaragames.shapespin | jgabocc/ShapeSpin |
-| Parchis Party | com.capibaragames.parchisparty | jgabocc/Parchis-Party |
+| Sudoku Master 3000 | com.gokapigo.sudokumaster3000 | jgabocc/SUDOKUMASTER3000 |
+| Shape Spin | com.gokapigo.shapespin | jgabocc/ShapeSpin |
+| Parchis Party | com.gokapigo.parchisparty | jgabocc/Parchis-Party |
 | Color Block Slide | com.gokapigo.colorblockslide | jgabocc/ColorBlockSlide |
 | Nuts & Bolts Sort | com.gokapigo.nutsboltssort | jgabocc/Nuts-Bolts-Sort |
 | Sand Block Puzzle | com.gokapigo.sandblockpuzzle | jgabocc/SandBlockPuzzle |
