@@ -26,7 +26,7 @@ Para cambiar la portada: edita `landing/` (si cambia el paquete de un juego, cam
 
 | Juego | Paquete | Repo |
 |---|---|---|
-| Aqua Sorting | com.gokapigo.aquasorting | jgabocc/AquaSort |
+| Aqua Sorting | com.capibaragames.aquasorting | jgabocc/AquaSort |
 | Sudoku Master 3000 | com.gokapigo.sudokumaster3000 | jgabocc/SUDOKUMASTER3000 |
 | Shape Spin | com.gokapigo.shapespin | jgabocc/ShapeSpin |
 | Parchis Party | com.gokapigo.parchisparty | jgabocc/Parchis-Party |
