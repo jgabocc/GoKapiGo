@@ -46,7 +46,8 @@ Ponlo en la raíz del repositorio (o cópialo como `CLAUDE.md`) para que Claude 
   3. un botón grande: **"Jugar nivel N"**,
   4. un enlace pequeño a **Ajustes**,
   5. el botón **Compartir**, discreto.
-- Nada más: sin menús, sin tiendas a la vista, sin banners.
+- Además, mientras no se haya comprado "Quitar anuncios": un botón redondo arriba a la izquierda con el ícono "AD" tachado (círculo rojo con raya). Al tocarlo abre la compra de Google Play; desaparece al comprar. No se muestra con ventanas abiertas ni durante la partida.
+- Nada más: sin menús, sin otras tiendas a la vista, sin banners en el inicio.
 - **Siempre retoma donde quedó**, nunca empieza de cero.
 
 ## 6. Progreso y niveles
