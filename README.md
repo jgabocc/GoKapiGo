@@ -16,11 +16,11 @@ GitHub Actions (`.github/workflows/pages.yml`) corre `herramientas/generar_sitio
 | Ruta | Qué es |
 |---|---|
 | `politica/<idioma>.html` | Texto de la política en cada idioma (solo el contenido). |
-| `juegos.json` | Juegos del estudio (nombre, paquete, repo) para la página de inicio. |
-| `site/` | Archivos fijos del sitio (logo, iconos, favicon). |
-| `herramientas/generar_sitio.py` | Arma el sitio en `_site/`. Para verlo en local: `python herramientas/generar_sitio.py`. |
+| `juegos.json` | Juegos del estudio (nombre, paquete, repo), como referencia. |
+| `landing/` | Portada del estudio (HTML, CSS, JS e imágenes). Se publica tal cual; sus estilos también visten la política. |
+| `herramientas/generar_sitio.py` | Arma el sitio en `_site/` (portada + política en 7 idiomas). Para verlo en local: `python herramientas/generar_sitio.py`. |
 
-Para cambiar la política: edita los 7 archivos de `politica/`, cambia la fecha de vigencia y haz push. Si el cambio es importante, avísalo dentro de los juegos.
+Para cambiar la portada: edita `landing/` (si cambia el paquete de un juego, cambia su enlace a Google Play). Para cambiar la política: edita los 7 archivos de `politica/`, cambia la fecha de vigencia y haz push. Si el cambio es importante, avísalo dentro de los juegos.
 
 ## Juegos
 
