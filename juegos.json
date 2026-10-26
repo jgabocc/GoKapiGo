@@ -5,5 +5,6 @@
   {"id": "parchisparty", "name": "Parchis Party", "package": "com.capibaragames.parchisparty", "repo": "Parchis-Party"},
   {"id": "colorblockslide", "name": "Color Block Slide", "package": "com.gokapigo.colorblockslide", "repo": "ColorBlockSlide"},
   {"id": "nutsboltssort", "name": "Nuts & Bolts Sort", "package": "com.gokapigo.nutsboltssort", "repo": "Nuts-Bolts-Sort"},
-  {"id": "sandblockpuzzle", "name": "Sand Block Puzzle", "package": "com.gokapigo.sandblockpuzzle", "repo": "SandBlockPuzzle"}
+  {"id": "sandblockpuzzle", "name": "Sand Block Puzzle", "package": "com.gokapigo.sandblockpuzzle", "repo": "SandBlockPuzzle"},
+  {"id": "arrowescape", "name": "Arrow Escape", "package": "com.gokapigo.arrowescape", "repo": "ArrowScape"}
 ]

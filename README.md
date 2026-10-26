@@ -33,7 +33,7 @@ Para cambiar la portada: edita `landing/` (si cambia el paquete de un juego, cam
 | Color Block Slide | com.gokapigo.colorblockslide | jgabocc/ColorBlockSlide |
 | Nuts & Bolts Sort | com.gokapigo.nutsboltssort | jgabocc/Nuts-Bolts-Sort |
 | Sand Block Puzzle | com.gokapigo.sandblockpuzzle | jgabocc/SandBlockPuzzle |
-| Arrow Escape | (pendiente) | jgabocc/ArrowScape |
+| Arrow Escape | com.gokapigo.arrowescape | jgabocc/ArrowScape |
 
 ## app-ads.txt
 
