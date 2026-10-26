@@ -1,5 +1,5 @@
 [
-  {"id": "aquasorting", "name": "Aqua Sorting", "package": "com.capibaragames.aquasorting", "repo": "AquaSort"},
+  {"id": "aquasorting", "name": "Aqua Sorting", "package": "com.gokapigo.aquasorting", "repo": "AquaSort"},
   {"id": "sudokumaster3000", "name": "Sudoku Master 3000", "package": "com.gokapigo.sudokumaster3000", "repo": "SUDOKUMASTER3000"},
   {"id": "shapespin", "name": "Shape Spin", "package": "com.gokapigo.shapespin", "repo": "ShapeSpin"},
   {"id": "parchisparty", "name": "Parchis Party", "package": "com.gokapigo.parchisparty", "repo": "Parchis-Party"},

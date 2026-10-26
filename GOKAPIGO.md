@@ -17,7 +17,7 @@ Ponlo en la raíz del repositorio (o cópialo como `CLAUDE.md`) para que Claude 
 - **Nombre siempre en inglés y el mismo en todos los países** (ej. *Aqua Sorting*).
 - En la ficha de la tienda, el subtítulo sí se traduce (ej. "Aqua Sorting – Puzzle de colores").
 - Estudio: **GoKapiGo** (antes "Capibara Games" / "KapiGames"). La mascota sigue siendo el capibara; solo cambió el nombre.
-- Paquete de los juegos nuevos: `com.gokapigo.<nombreenminusculas>` (ej. `com.gokapigo.shapespin`). Los juegos ya publicados conservan su paquete (Aqua Sorting: `com.capibaragames.aquasorting`).
+- Paquete de los juegos nuevos: `com.gokapigo.<nombreenminusculas>` (ej. `com.gokapigo.shapespin`). Aqua Sorting también pasó a `com.gokapigo.aquasorting` antes de su primera subida a Play.
 - Desarrollador en Play Store: **GoKapiGo** (cuenta de organización, D-U-N-S de Capibara Comercializadora C.A.).
 - Icono propio por juego: fondo de color sólido o degradado y el objeto principal del juego, sin texto.
 
