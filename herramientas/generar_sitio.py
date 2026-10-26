@@ -2,6 +2,7 @@
 - landing/: portada del estudio (index.html, styles.css, script.js, img/) tal cual.
 - privacy/index.html: elige el idioma del navegador (o ?lang=xx) y abre privacy/<idioma>.html (inglés si no es uno de los 7).
 - privacy/<idioma>.html: la política común, desde politica/<idioma>.html, con la barra y el pie de la portada.
+- delete-data/index.html: cómo pedir el borrado de datos (es + en), para Play Console.
 - privacidad.html: enlace antiguo, lleva a privacy/es.html.
 Uso: python herramientas/generar_sitio.py   (lo corre GitHub Actions en cada push a main)
 """
@@ -95,6 +96,13 @@ if(L.indexOf(k)>=0){location.replace(k+".html"+location.hash);return}}location.r
     open(os.path.join(OUT, "privacy", "index.html"), "w", encoding="utf-8", newline="\n").write(
         head("Privacy Policy · GoKapiGo", "en", "GoKapiGo privacy policy", "../") + script + topbar("en", "../")
         + f'<main class="legal"><div class="wrap"><article><h1>Privacy Policy</h1><ul>{links}</ul></article></div></main>\n' + footer("en", "../"))
+
+    # delete-data/: cómo pedir el borrado de datos (URL de "Seguridad de los datos" en Play Console), es + en
+    os.makedirs(os.path.join(OUT, "delete-data"), exist_ok=True)
+    body = open(os.path.join(ROOT, "politica", "eliminar-datos.html"), encoding="utf-8").read()
+    open(os.path.join(OUT, "delete-data", "index.html"), "w", encoding="utf-8", newline="\n").write(
+        head("Eliminar tus datos · Delete your data · GoKapiGo", "es", "Cómo eliminar tus datos de los juegos y apps de GoKapiGo", "../")
+        + topbar("es", "../") + f'<main class="legal"><div class="wrap"><article>{body}</article></div></main>\n' + footer("es", "../"))
 
     # enlace antiguo de la portada
     open(os.path.join(OUT, "privacidad.html"), "w", encoding="utf-8", newline="\n").write(
