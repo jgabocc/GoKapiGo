@@ -6,5 +6,10 @@
   {"id": "colorblockslide", "name": "Color Block Slide", "package": "com.gokapigo.colorblockslide", "repo": "ColorBlockSlide"},
   {"id": "nutsboltssort", "name": "Nuts & Bolts Sort", "package": "com.gokapigo.nutsboltssort", "repo": "Nuts-Bolts-Sort"},
   {"id": "sandblockpuzzle", "name": "Sand Block Puzzle", "package": "com.gokapigo.sandblockpuzzle", "repo": "SandBlockPuzzle"},
-  {"id": "arrowescape", "name": "Arrow Escape", "package": "com.gokapigo.arrowescape", "repo": "ArrowScape"}
+  {"id": "arrowescape", "name": "Arrow Escape", "package": "com.gokapigo.arrowescape", "repo": "ArrowScape"},
+  {"id": "pipeconnect", "name": "Pipe Connect", "package": "com.gokapigo.pipeconnect", "repo": "PipeConnect"},
+  {"id": "onestroke", "name": "One Stroke", "package": "com.gokapigo.onestroke", "repo": "OneStroke"},
+  {"id": "mazequest", "name": "Maze Quest", "package": "com.gokapigo.mazequest", "repo": "MazeQuest"},
+  {"id": "shapetiles", "name": "Shape Tiles", "package": "com.gokapigo.shapetiles", "repo": "ShapeTiles"},
+  {"id": "solitaireclassic", "name": "Solitaire Classic", "package": "com.gokapigo.solitaireclassic", "repo": "SolitaireClassic"}
 ]

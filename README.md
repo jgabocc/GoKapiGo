@@ -34,6 +34,11 @@ Para cambiar la portada: edita `landing/` (si cambia el paquete de un juego, cam
 | Nuts & Bolts Sort | com.gokapigo.nutsboltssort | jgabocc/Nuts-Bolts-Sort |
 | Sand Block Puzzle | com.gokapigo.sandblockpuzzle | jgabocc/SandBlockPuzzle |
 | Arrow Escape | com.gokapigo.arrowescape | jgabocc/ArrowScape |
+| Pipe Connect | com.gokapigo.pipeconnect | jgabocc/PipeConnect |
+| One Stroke | com.gokapigo.onestroke | jgabocc/OneStroke |
+| Maze Quest | com.gokapigo.mazequest | jgabocc/MazeQuest |
+| Shape Tiles | com.gokapigo.shapetiles | jgabocc/ShapeTiles |
+| Solitaire Classic | com.gokapigo.solitaireclassic | jgabocc/SolitaireClassic |
 
 ## app-ads.txt
 
