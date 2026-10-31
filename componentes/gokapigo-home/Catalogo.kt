@@ -37,7 +37,7 @@ object Catalogo {
         item("arrowescape", "game", "Arrow Escape", 0xFF3A6FE0, false),
         item("aquasorting", "game", "Aqua Sorting", 0xFF38B6FF, false),
         item("nutsboltssort", "game", "Nuts & Bolts Sort", 0xFFE5484D, false),
-        item("colorblockslide", "game", "Color Block Slide", 0xFF2E9E5B, false),
+        item("colorblockslide", "game", "Color Block Slide", 0xFF33507A, false),
         item("sudokumaster3000", "game", "Sudoku Master 3000", 0xFF7A8CC4, false),
         item("shapespin", "game", "Shape Spin", 0xFF5C7CFF, false),
         item("parchisparty", "game", "Parchis Party", 0xFF2E9E5B, false),

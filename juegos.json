@@ -3,7 +3,7 @@
   {"id": "arrowescape", "type": "game", "name": "Arrow Escape", "package": "com.gokapigo.arrowescape", "repo": "ArrowScape", "color": "#3A6FE0", "public": false, "listed": true},
   {"id": "aquasorting", "type": "game", "name": "Aqua Sorting", "package": "com.gokapigo.aquasorting", "repo": "AquaSort", "color": "#38B6FF", "public": false, "listed": true},
   {"id": "nutsboltssort", "type": "game", "name": "Nuts & Bolts Sort", "package": "com.gokapigo.nutsboltssort", "repo": "Nuts-Bolts-Sort", "color": "#E5484D", "public": false, "listed": true},
-  {"id": "colorblockslide", "type": "game", "name": "Color Block Slide", "package": "com.gokapigo.colorblockslide", "repo": "ColorBlockSlide", "color": "#2E9E5B", "public": false, "listed": true},
+  {"id": "colorblockslide", "type": "game", "name": "Color Block Slide", "package": "com.gokapigo.colorblockslide", "repo": "ColorBlockSlide", "color": "#33507A", "public": false, "listed": true},
   {"id": "sudokumaster3000", "type": "game", "name": "Sudoku Master 3000", "package": "com.gokapigo.sudokumaster3000", "repo": "SUDOKUMASTER3000", "color": "#7A8CC4", "public": false, "listed": true},
   {"id": "shapespin", "type": "game", "name": "Shape Spin", "package": "com.gokapigo.shapespin", "repo": "ShapeSpin", "color": "#5C7CFF", "public": false, "listed": true},
   {"id": "parchisparty", "type": "game", "name": "Parchis Party", "package": "com.gokapigo.parchisparty", "repo": "Parchis-Party", "color": "#2E9E5B", "public": false, "listed": true},
