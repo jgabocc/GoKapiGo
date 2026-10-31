@@ -108,7 +108,7 @@ h1 em { font-style: normal; color: var(--orange); }
 .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
-  padding: 18px; display: flex; flex-direction: column; gap: 12px;
+  padding: 18px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;
   transition: border-color .2s, transform .2s;
 }
 .card:hover { border-color: var(--fur); transform: translateY(-3px); }
@@ -119,6 +119,7 @@ h1 em { font-style: normal; color: var(--orange); }
   border: 1px solid var(--line);
 }
 .icon svg { width: 72%; height: 72%; }
+.icon img { width: 100%; height: 100%; display: block; }
 .tag { font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--fur); }
 .card h3 { font-size: 1.2rem; }
 .card p { margin: 0; color: var(--muted); font-size: .93rem; flex: 1; }
@@ -129,6 +130,18 @@ h1 em { font-style: normal; color: var(--orange); }
 }
 .play:hover { filter: brightness(1.08); }
 .play svg { width: 18px; height: 18px; }
+
+/* Cinta de estado en Play (la pone herramientas/generar_sitio.py según catalog.json, a diario) */
+.card:has(.ribbon) { padding-top: 40px; }
+.ribbon {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 1; padding: 6px 8px;
+  text-align: center; font: 700 .68rem/1.2 var(--f-body); letter-spacing: .06em; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none;
+}
+.ribbon.on { background: #7ac74f; color: #0f1a08; }
+.ribbon.soon { background: var(--cream); color: var(--bg); }
+.play.soon { background: transparent; color: var(--muted); border: 1px dashed var(--line); cursor: default; }
+.play.soon:hover { filter: none; }
 
 /* ---------- Política ---------- */
 .legal .wrap { padding-block: clamp(32px, 5vw, 64px); }

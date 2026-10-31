@@ -5,9 +5,10 @@
 - delete-data/index.html: cómo pedir el borrado de datos (es + en), para Play Console.
 - privacidad.html: enlace antiguo, lleva a privacy/es.html.
 - catalog.json: catálogo de la portada GoKapiGo Home de los juegos (herramientas/catalogo.py; iconos en landing/iconos/).
+  Con él, cada tarjeta de la portada lleva su cinta: «Disponible en Google Play» o «Próximamente» (sin enlace a Play).
 Uso: python herramientas/generar_sitio.py   (lo corre GitHub Actions en cada push a main)
 """
-import html, json, os, shutil
+import html, json, os, re, shutil
 
 import catalogo
 
@@ -76,6 +77,24 @@ def footer(lang, base):
 """
 
 
+def cintas(portada, publicas):
+    """Cinta en cada tarjeta de la portada según Play: «Disponible en Google Play» (con enlace) o «Próximamente» (sin enlace)."""
+    def tarjeta(m):
+        c = m.group(0)
+        if publicas.get(m.group(1)):
+            return c.replace(">", '><span class="ribbon on">Disponible en Google Play</span>', 1)
+        c = re.sub(r'<a class="play"[^>]*>.*?</a>', '<span class="play soon" aria-disabled="true">Próximamente</span>', c, flags=re.S)
+        return c.replace(">", '><span class="ribbon soon">Próximamente</span>', 1)
+    portada = re.sub(r'<article class="card" data-paquete="([\w.]+)">.*?</article>', tarjeta, portada, flags=re.S)
+
+    # Los disponibles primero (dentro de cada rejilla, sin cambiar el orden entre ellos)
+    def rejilla(m):
+        tarjetas = re.findall(r'\s*<article class="card".*?</article>', m.group(2), flags=re.S)
+        tarjetas.sort(key=lambda c: 'ribbon soon' in c)
+        return m.group(1) + "".join(tarjetas) + "\n\n      " + m.group(3)
+    return re.sub(r'(<div class="grid">)(.*?)(</div>\s*</div>\s*</section>)', rejilla, portada, flags=re.S)
+
+
 def main():
     if os.path.exists(OUT): shutil.rmtree(OUT)
     shutil.copytree(os.path.join(ROOT, "landing"), OUT)
@@ -113,7 +132,10 @@ if(L.indexOf(k)>=0){location.replace(k+".html"+location.hash);return}}location.r
         '<link rel="canonical" href="privacy/es.html"><a href="privacy/es.html">Política de privacidad</a>\n')
     # catalog.json de la portada GoKapiGo Home (comprueba en Play qué juegos ya son públicos)
     print("catálogo GoKapiGo Home:")
-    catalogo.generar(os.path.join(OUT, "catalog.json"))
+    items = catalogo.generar(os.path.join(OUT, "catalog.json"))
+    portada = os.path.join(OUT, "index.html")
+    html_portada = cintas(open(portada, encoding="utf-8").read(), {it["package"]: it["public"] for it in items})
+    open(portada, "w", encoding="utf-8", newline="\n").write(html_portada)
     print("sitio en", OUT)
 
 
