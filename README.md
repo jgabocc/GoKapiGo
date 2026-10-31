@@ -16,7 +16,9 @@ GitHub Actions (`.github/workflows/pages.yml`) corre `herramientas/generar_sitio
 | Ruta | Qué es |
 |---|---|
 | `politica/<idioma>.html` | Texto de la política en cada idioma (solo el contenido). |
-| `juegos.json` | Juegos del estudio (nombre, paquete, repo), como referencia. |
+| `juegos.json` | Juegos y apps del estudio (paquete, repo, color, tipo). Fuente de `catalog.json` (portada GoKapiGo Home de los juegos): el orden es el del carrusel, `listed: false` lo oculta. |
+| `componentes/gokapigo-home/` | Portada GoKapiGo Home nativa (Kotlin), copia de referencia igual en todos los juegos. |
+| `landing/iconos/` | Icono de Play de cada juego (192 px), para el carrusel. |
 | `landing/` | Portada del estudio (HTML, CSS, JS e imágenes). Se publica tal cual; sus estilos también visten la política. |
 | `herramientas/generar_sitio.py` | Arma el sitio en `_site/` (portada + política en 7 idiomas). Para verlo en local: `python herramientas/generar_sitio.py`. |
 

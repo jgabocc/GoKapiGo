@@ -4,9 +4,12 @@
 - privacy/<idioma>.html: la política común, desde politica/<idioma>.html, con la barra y el pie de la portada.
 - delete-data/index.html: cómo pedir el borrado de datos (es + en), para Play Console.
 - privacidad.html: enlace antiguo, lleva a privacy/es.html.
+- catalog.json: catálogo de la portada GoKapiGo Home de los juegos (herramientas/catalogo.py; iconos en landing/iconos/).
 Uso: python herramientas/generar_sitio.py   (lo corre GitHub Actions en cada push a main)
 """
 import html, json, os, shutil
+
+import catalogo
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "_site")
@@ -108,6 +111,9 @@ if(L.indexOf(k)>=0){location.replace(k+".html"+location.hash);return}}location.r
     open(os.path.join(OUT, "privacidad.html"), "w", encoding="utf-8", newline="\n").write(
         '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=privacy/es.html">'
         '<link rel="canonical" href="privacy/es.html"><a href="privacy/es.html">Política de privacidad</a>\n')
+    # catalog.json de la portada GoKapiGo Home (comprueba en Play qué juegos ya son públicos)
+    print("catálogo GoKapiGo Home:")
+    catalogo.generar(os.path.join(OUT, "catalog.json"))
     print("sitio en", OUT)
 
 

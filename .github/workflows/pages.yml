@@ -5,6 +5,9 @@ name: Sitio (GitHub Pages)
 on:
   push:
     branches: [main]
+  # Cada día: catalog.json vuelve a mirar en Play qué juegos ya son públicos (salen solos en el carrusel de los demás).
+  schedule:
+    - cron: "17 11 * * *"
   workflow_dispatch:
 
 permissions:
