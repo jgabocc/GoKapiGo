@@ -257,8 +257,8 @@ fun GoKapiGoHome(
                             if (mostrarSinAnuncios) {
                                 Box(Modifier.weight(1f)) {
                                     BotonChico(
-                                        t.sinAnuncios + (precioSinAnuncios?.let { " · $it" } ?: ""), null, Color.Black.copy(alpha = 0.35f), blanco,
-                                        estilo, onSinAnuncios, adTachado = true,
+                                        t.sinAnuncios, null, Color.Black.copy(alpha = 0.35f), blanco,
+                                        estilo, onSinAnuncios, adTachado = true, detalle = precioSinAnuncios,
                                     )
                                 }
                             }
@@ -324,7 +324,7 @@ private fun BotonGrande(texto: String, icono: ImageVector, fondo: Color, tinta: 
 @Composable
 private fun BotonChico(
     texto: String, icono: ImageVector?, fondo: Color, tinta: Color,
-    estilo: (Int, FontWeight, Color) -> TextStyle, onClick: () -> Unit, adTachado: Boolean = false,
+    estilo: (Int, FontWeight, Color) -> TextStyle, onClick: () -> Unit, adTachado: Boolean = false, detalle: String? = null,
 ) {
     Row(
         Modifier.fillMaxWidth().height(50.dp).clip(RoundedCornerShape(14.dp)).background(fondo).clickable(onClick = onClick).padding(horizontal = 10.dp),
@@ -338,7 +338,11 @@ private fun BotonChico(
             AdTachado()
             Spacer(Modifier.width(7.dp))
         }
-        Text(texto, maxLines = 1, overflow = TextOverflow.Ellipsis, style = estilo(14, FontWeight.ExtraBold, tinta))
+        // El precio va debajo, más pequeño: así «Sin anuncios» cabe entero en cualquier idioma.
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(texto, maxLines = 1, overflow = TextOverflow.Ellipsis, style = estilo(14, FontWeight.ExtraBold, tinta))
+            if (detalle != null) Text(detalle, maxLines = 1, style = estilo(11, FontWeight.Bold, tinta.copy(alpha = 0.7f)))
+        }
     }
 }
 
