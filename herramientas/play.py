@@ -24,6 +24,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")     # la consola de Windows no imprime ✓ ✗ →
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 CUENTA = os.environ.get("PLAY_CUENTA", os.path.join(RAIZ, "_play", "cuenta.json"))
 
