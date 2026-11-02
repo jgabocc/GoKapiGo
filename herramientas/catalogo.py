@@ -39,16 +39,16 @@ def generar(destino, comprobar=True):
         if not j.get("listed", True):
             continue
         publica = publica_en_play(j["package"], j.get("public", False)) if comprobar else j.get("public", False)
-        if CONGELADO is not None:
-            publica = j["id"] in CONGELADO
         items.append({
             "id": j["id"], "type": j.get("type", "game"), "name": j["name"], "package": j["package"],
             "color": j["color"], "icon": f"{SITIO}/iconos/{j['id']}.png", "public": publica,
         })
         print(f"  {j['id']:<18} {'pública' if publica else '—'}")
+    # Lo que leen los juegos (congelado si hace falta); el sitio sigue recibiendo el estado real de Play.
+    para_juegos = items if CONGELADO is None else [{**it, "public": it["id"] in CONGELADO} for it in items]
     os.makedirs(os.path.dirname(destino), exist_ok=True)
     with open(destino, "w", encoding="utf-8", newline="\n") as f:
-        json.dump({"version": 1, "items": items}, f, ensure_ascii=False, indent=1)
+        json.dump({"version": 1, "items": para_juegos}, f, ensure_ascii=False, indent=1)
     return items
 
 
