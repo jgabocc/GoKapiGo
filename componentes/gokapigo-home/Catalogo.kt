@@ -24,8 +24,11 @@ data class ItemCatalogo(
 
 object Catalogo {
 
-    /** El catálogo vivo: https://www.capibaradev.com/catalog.json (lo publica el repo GoKapiGo, carpeta landing/). */
-    const val URL = "https://www.capibaradev.com/catalog.json"
+    /**
+     * El catálogo vivo (lo publica el repo GoKapiGo, herramientas/catalogo.py). catalog.json queda congelado para las 1.1,
+     * que se cerraban si el carrusel crecía; desde la 1.2 se lee catalog-v2.json.
+     */
+    const val URL = "https://www.capibaradev.com/catalog-v2.json"
     private const val ICONOS = "https://www.capibaradev.com/iconos/"
 
     private fun item(id: String, tipo: String, nombre: String, color: Long, publica: Boolean) =
@@ -35,17 +38,17 @@ object Catalogo {
     val EMBEBIDO: List<ItemCatalogo> = listOf(
         item("sandblockpuzzle", "game", "Sand Block Puzzle", 0xFFE0A83A, true),
         item("arrowescape", "game", "Arrow Escape", 0xFF3A6FE0, false),
-        item("aquasorting", "game", "Aqua Sorting", 0xFF38B6FF, false),
-        item("nutsboltssort", "game", "Nuts & Bolts Sort", 0xFFE5484D, false),
-        item("colorblockslide", "game", "Color Block Slide", 0xFF33507A, false),
-        item("sudokumaster3000", "game", "Sudoku Master 3000", 0xFF7A8CC4, false),
-        item("shapespin", "game", "Shape Spin", 0xFF5C7CFF, false),
-        item("parchisparty", "game", "Parchis Party", 0xFF2E9E5B, false),
-        item("pipeconnect", "game", "Pipe Connect", 0xFF3478F6, false),
-        item("onestroke", "game", "One Stroke", 0xFFF4B544, false),
-        item("mazequest", "game", "Maze Quest", 0xFF2E9E5B, false),
-        item("shapetiles", "game", "Shape Tiles", 0xFF4A5BD8, false),
-        item("solitaireclassic", "game", "Solitaire Classic", 0xFF1F7A45, false),
+        item("aquasorting", "game", "Aqua Sorting", 0xFF38B6FF, true),
+        item("nutsboltssort", "game", "Nuts & Bolts Sort", 0xFFE5484D, true),
+        item("colorblockslide", "game", "Color Block Slide", 0xFF33507A, true),
+        item("sudokumaster3000", "game", "Sudoku Master 3000", 0xFF7A8CC4, true),
+        item("shapespin", "game", "Shape Spin", 0xFF5C7CFF, true),
+        item("parchisparty", "game", "Parchis Party", 0xFF2E9E5B, true),
+        item("pipeconnect", "game", "Pipe Connect", 0xFF3478F6, true),
+        item("onestroke", "game", "One Stroke", 0xFFF4B544, true),
+        item("mazequest", "game", "Maze Quest", 0xFF2E9E5B, true),
+        item("shapetiles", "game", "Shape Tiles", 0xFF4A5BD8, true),
+        item("solitaireclassic", "game", "Solitaire Classic", 0xFF1F7A45, true),
         item("shapeblast", "game", "Shape Blast", 0xFFFF6B2C, false),
         item("docsarxhive", "app", "docsArxhive", 0xFFF2B705, false),
     )

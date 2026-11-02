@@ -188,9 +188,11 @@ fun GoKapiGoHome(
                     pager, Modifier.fillMaxWidth().height(lado + 28.dp),
                     pageSize = PageSize.Fixed(lado), pageSpacing = 14.dp,
                     contentPadding = PaddingValues(horizontal = (maxWidth - lado) / 2),
-                    key = { lista[it].id },
+                    // getOrNull: si el catálogo cambia de tamaño, el pager puede pedir un índice de la lista anterior
+                    // durante un fotograma (en la 1.1 eso cerraba la app).
+                    key = { lista.getOrNull(it)?.id ?: "pagina$it" },
                 ) { i ->
-                    val it = lista[i]
+                    val it = lista.getOrNull(i) ?: return@HorizontalPager
                     val d = min(1f, abs(pager.getOffsetDistanceInPages(i)))
                     Box(
                         Modifier.fillMaxSize()
