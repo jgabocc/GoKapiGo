@@ -14,6 +14,10 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITIO = "https://www.capibaradev.com"
+# EMERGENCIA (2026-11-02): las versiones 1.1 de los juegos se cierran si el carrusel crece respecto a su catálogo
+# embebido (en el que solo Sand es pública). Mientras haya 1.1 en los teléfonos, el catálogo publica solo estas como
+# públicas. Quitarlo (None) cuando la 1.2 con el arreglo lleve tiempo en producción.
+CONGELADO = {"sandblockpuzzle"}
 
 
 def publica_en_play(paquete, respaldo):
@@ -35,6 +39,8 @@ def generar(destino, comprobar=True):
         if not j.get("listed", True):
             continue
         publica = publica_en_play(j["package"], j.get("public", False)) if comprobar else j.get("public", False)
+        if CONGELADO is not None:
+            publica = j["id"] in CONGELADO
         items.append({
             "id": j["id"], "type": j.get("type", "game"), "name": j["name"], "package": j["package"],
             "color": j["color"], "icon": f"{SITIO}/iconos/{j['id']}.png", "public": publica,
