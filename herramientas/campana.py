@@ -2,7 +2,7 @@
 
 Sale en <juego>/campanas/google-ads/<idioma>/:
   horizontal.png 1200x628 · cuadrada.png 1200x1200 · vertical.png 1200x1500 · jugable.zip · textos.txt
-Uso: python campana.py sand maze solitaire        (idiomas: es-419 y pt-BR, para Latinoamérica)
+Uso: python campana.py sand maze aqua        (idiomas: es-419 y pt-BR, para Latinoamérica)
 """
 import json
 import os
@@ -19,9 +19,22 @@ JUEGOS = {
     "sand": {"carpeta": "sand-block-puzzle", "id": "sandblockpuzzle", "captura": 2},
     "maze": {"carpeta": "maze-quest", "id": "mazequest", "captura": 3},
     "solitaire": {"carpeta": "solitaire-classic", "id": "solitaireclassic", "captura": 2},
+    "aqua": {"carpeta": "AquaSorting", "id": "aquasorting", "captura": 2},
 }
 # Google Ads: títulos hasta 30 caracteres, descripciones hasta 90
 TEXTOS = {
+    "aqua": {
+        "es-419": {"gancho": "¡Ordena el agua por colores!", "boton": "Jugar gratis",
+                   "titulos": ["Ordena el agua por colores", "Puzzle de agua relajante", "Llena cada tubo de un color", "Juega gratis sin internet", "Aqua Sorting"],
+                   "descripciones": ["Vierte el agua de un tubo a otro hasta que cada uno quede de un solo color.",
+                                     "Un puzzle relajante para tu mente, con cientos de niveles y tubo extra.",
+                                     "Gratis y sin internet. ¿Cuántos niveles puedes resolver?"]},
+        "pt-BR": {"gancho": "Separe a água por cores!", "boton": "Jogar grátis",
+                  "titulos": ["Separe a água por cores", "Puzzle de água relaxante", "Encha cada tubo de uma cor", "Jogue grátis sem internet", "Aqua Sorting"],
+                  "descripciones": ["Despeje a água de um tubo para outro até cada um ficar de uma só cor.",
+                                    "Um puzzle relaxante para a mente, com centenas de níveis e tubo extra.",
+                                    "Grátis e sem internet. Quantos níveis você consegue resolver?"]},
+    },
     "sand": {
         "es-419": {"gancho": "¡Bloques que se vuelven arena!", "boton": "Jugar gratis",
                    "titulos": ["Bloques que se vuelven arena", "Puzzle de arena relajante", "Une colores de lado a lado", "Juega gratis sin internet", "Sand Block Puzzle"],
