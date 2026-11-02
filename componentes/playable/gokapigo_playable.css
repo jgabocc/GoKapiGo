@@ -1,0 +1,23 @@
+#gkgIntro,#gkgEnd{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(80% 55% at 50% 38%,#3a2208 0%,#160f08 55%,#0f0c09 100%);color:#f2eee6;
+  font-family:"Russo One","Arial Black",system-ui,sans-serif;text-align:center;overflow:hidden;-webkit-tap-highlight-color:transparent}
+#gkgIntro img{width:min(46vmin,240px);height:auto;animation:gkgIn .9s cubic-bezier(.2,.9,.25,1.25) both}
+#gkgIntro.out{opacity:0;transition:opacity .45s ease}
+@keyframes gkgIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+#gkgEnd{gap:min(3.2vmin,22px);padding:16px 0;animation:gkgFade .35s ease both}
+@keyframes gkgFade{from{opacity:0}to{opacity:1}}
+#gkgEnd .gk{width:min(26vmin,150px);height:auto}
+#gkgEnd .strip{position:relative;width:100%;height:calc(var(--s) * 2.3);overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+#gkgEnd .reel{position:absolute;left:0;top:50%;display:flex;gap:var(--g);will-change:transform;transform:translate(0,-50%)}
+#gkgEnd .reel img{width:var(--s);height:var(--s);border-radius:22%;flex:none;box-shadow:0 6px 18px rgba(0,0,0,.45);transition:transform .45s cubic-bezier(.2,.9,.25,1.4),box-shadow .45s}
+#gkgEnd .reel img.me.on{transform:scale(1.32);box-shadow:0 0 0 3px #fb7b00,0 0 34px 6px rgba(251,123,0,.6)}
+#gkgEnd .nm{margin:0;font-size:min(8vmin,40px);line-height:1.05;padding:0 16px}
+#gkgEnd h2{margin:0;font-size:min(5vmin,24px);color:#fb7b00;font-weight:400;padding:0 16px}
+#gkgEnd .cta{font:inherit;font-size:min(6vmin,26px);color:#1a0d00;background:#fb7b00;border:0;border-radius:18px;
+  padding:min(3.6vmin,18px) min(10vmin,52px);box-shadow:0 8px 0 #9b4c00,0 12px 26px rgba(0,0,0,.45);cursor:pointer;animation:gkgPulse 1.15s ease-in-out infinite}
+#gkgEnd .nm,#gkgEnd h2,#gkgEnd .cta{opacity:0;transform:translateY(14px);transition:opacity .4s ease,transform .4s ease}
+#gkgEnd.ok .nm,#gkgEnd.ok h2,#gkgEnd.ok .cta{opacity:1;transform:none}
+#gkgEnd.ok h2{transition-delay:.08s}#gkgEnd.ok .cta{transition-delay:.16s}
+@keyframes gkgPulse{0%,100%{scale:1}50%{scale:1.07}}
+@media (orientation:landscape) and (max-height:520px){#gkgEnd{gap:4px;padding:8px 0}#gkgEnd .gk{width:min(18vmin,80px)}#gkgEnd .nm{font-size:min(7vmin,30px)}#gkgEnd .cta{padding:10px 40px}}
