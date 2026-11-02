@@ -19,9 +19,20 @@
     if (listo) listo(empezar); else empezar();
   };
 
+  // El logo dibujado del prototipo HTML (svg.logo) puede ser más viejo que el icono de Play: se cambia por el icono real
+  function iconoReal() {
+    var vs = document.querySelectorAll("svg.logo");
+    for (var i = 0; i < vs.length; i++) {
+      var im = document.createElement("img"); im.src = C.me; im.alt = ""; im.className = vs[i].getAttribute("class");
+      im.style.borderRadius = "22%"; im.style.objectFit = "cover";
+      vs[i].parentNode.replaceChild(im, vs[i]);
+    }
+  }
+
   // 2. Final: cuando el juego muestra su #playEnd, lo tapa el final común (con sus mismos textos ya traducidos)
   var hecho = false;
   function revisar() {
+    iconoReal();
     var e = document.getElementById("playEnd");
     if (hecho || !e || e.hidden || getComputedStyle(e).display === "none") return;
     hecho = true; final(e);
