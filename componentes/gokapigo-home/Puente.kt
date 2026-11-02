@@ -30,8 +30,9 @@ class PuenteHome(private val ctx: Context) {
     private val carpeta = File(ctx.filesDir, "gkg_iconos")
 
     /** El último catálogo bueno guardado, o el embebido. Nunca falla y no usa internet. */
+    // Guardado propio de catalog-v2.json: el de la 1.1 ("catalogo") es el congelado y no debe esperar 12 h para cambiarse.
     fun catalogoGuardado(): List<ItemCatalogo> =
-        prefs.getString("catalogo", null)?.let { Catalogo.desdeJson(it) } ?: Catalogo.EMBEBIDO
+        prefs.getString("catalogo_v2", null)?.let { Catalogo.desdeJson(it) } ?: Catalogo.EMBEBIDO
 
     /**
      * Descarga el catálogo (máx. una vez cada 12 h, 5 s de espera). null si no cambió nada o no hubo red:
@@ -39,10 +40,10 @@ class PuenteHome(private val ctx: Context) {
      */
     suspend fun actualizarCatalogo(forzar: Boolean = false): List<ItemCatalogo>? = withContext(Dispatchers.IO) {
         val ahora = System.currentTimeMillis()
-        if (!forzar && ahora - prefs.getLong("catalogo_t", 0) < 12 * 3600_000L) return@withContext null
+        if (!forzar && ahora - prefs.getLong("catalogo_v2_t", 0) < 12 * 3600_000L) return@withContext null
         val texto = descargar(Catalogo.URL)?.toString(Charsets.UTF_8) ?: return@withContext null
         val nuevo = Catalogo.desdeJson(texto) ?: return@withContext null
-        prefs.edit { putString("catalogo", Catalogo.aJson(nuevo)); putLong("catalogo_t", ahora) }
+        prefs.edit { putString("catalogo_v2", Catalogo.aJson(nuevo)); putLong("catalogo_v2_t", ahora) }
         nuevo
     }
 
