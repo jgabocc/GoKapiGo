@@ -1,4 +1,4 @@
-"""Genera catalog.json, el catálogo de la portada GoKapiGo Home que leen todos los juegos.
+"""Genera catalog.json y catalog-v2.json, el catálogo de la portada GoKapiGo Home que leen todos los juegos.
 
 - Sale de juegos.json (orden = orden del carrusel). "listed": false lo deja fuera (p. ej. un juego aún sin enviar a Play).
 - "public" se comprueba en cada publicación del sitio abriendo la ficha de Google Play (200 = pública, 404 = aún no).
@@ -14,9 +14,9 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITIO = "https://www.capibaradev.com"
-# EMERGENCIA (2026-11-02): las versiones 1.1 de los juegos se cierran si el carrusel crece respecto a su catálogo
-# embebido (en el que solo Sand es pública). Mientras haya 1.1 en los teléfonos, el catálogo publica solo estas como
-# públicas. Quitarlo (None) cuando la 1.2 con el arreglo lleve tiempo en producción.
+# catalog.json lo leen las 1.1 de los juegos, que se cierran si su carrusel crece respecto al catálogo embebido (en el
+# que solo Sand es pública). Por eso queda congelado para siempre con solo Sand pública (2026-11-02).
+# Desde la 1.2 los juegos leen catalog-v2.json, con el estado real de Play.
 CONGELADO = {"sandblockpuzzle"}
 
 
@@ -44,11 +44,12 @@ def generar(destino, comprobar=True):
             "color": j["color"], "icon": f"{SITIO}/iconos/{j['id']}.png", "public": publica,
         })
         print(f"  {j['id']:<18} {'pública' if publica else '—'}")
-    # Lo que leen los juegos (congelado si hace falta); el sitio sigue recibiendo el estado real de Play.
-    para_juegos = items if CONGELADO is None else [{**it, "public": it["id"] in CONGELADO} for it in items]
+    # destino = catalog.json (1.1, congelado); al lado, catalog-v2.json (1.2 en adelante, real). El sitio recibe el real.
     os.makedirs(os.path.dirname(destino), exist_ok=True)
-    with open(destino, "w", encoding="utf-8", newline="\n") as f:
-        json.dump({"version": 1, "items": para_juegos}, f, ensure_ascii=False, indent=1)
+    congelado = [{**it, "public": it["id"] in CONGELADO} for it in items]
+    for ruta, lista in ((destino, congelado), (os.path.join(os.path.dirname(destino), "catalog-v2.json"), items)):
+        with open(ruta, "w", encoding="utf-8", newline="\n") as f:
+            json.dump({"version": 1, "items": lista}, f, ensure_ascii=False, indent=1)
     return items
 
 
