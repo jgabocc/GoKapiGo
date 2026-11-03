@@ -47,6 +47,9 @@ class PuenteHome(private val ctx: Context) {
         nuevo
     }
 
+    /** Turno del ribbon «Juega también»: sube cada vez que se muestra la portada, así rota el juego recomendado. */
+    fun turnoRibbon(): Int = prefs.getInt("ribbon_turno", 0).also { prefs.edit { putInt("ribbon_turno", it + 1) } }
+
     fun instalado(paquete: String): Boolean =
         paquete.startsWith(Catalogo.PREFIJO) && ctx.packageManager.getLaunchIntentForPackage(paquete) != null
 

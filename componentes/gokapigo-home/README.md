@@ -14,7 +14,12 @@ Nació de la prueba de concepto web (`GoKapiGo_Home_v1_1.zip`), reescrita en nat
 - Con el propio al centro: regalo diario (botón, nunca ventana) con la racha de 7 días y «Sin anuncios · precio» con el
   AD tachado. Con otro al centro: «← Volver a …».
 - Barra superior: estrellas · idioma (opcional) · calificar (por defecto abre la ficha en Play) · compartir · ajustes.
-- **Sin banner** en la portada (los anuncios van solo durante la partida).
+- **Sin banner de anuncios** en la portada (los anuncios van solo durante la partida).
+- **Ribbon «Juega también»** (estándar del estudio, 2026-11-03): un juego del estudio que el usuario **no tiene instalado**
+  (solo juegos, no apps), rotando cada vez que se muestra; todo el ribbon abre su ficha en Play. Sale arriba en la portada
+  (solo con el juego propio al centro) y **en la ventana de nivel completado** de cada juego:
+  `RibbonJuegaTambien(propioId, Modifier.fillMaxWidth(), Nunito, lugar = "nivel", onPromo = …)` bajo los botones.
+  Referrer `utm_campaign=gokapigo_ribbon` (portada) o `gokapigo_ribbon_<lugar>`. Si ya los tiene todos, no sale nada.
 - 7 idiomas (es, en, pt, fr, de, pl, ru) según el idioma de la app; si no, inglés.
 - **Icono:** el propio sale del icono de la app (capas del icono adaptable, cuadrado, sin máscara) = el de Play.
   Los instalados, de su icono real; los demás, del PNG de Play en `capibaradev.com/iconos/<id>.png` (guardado 7 días).

@@ -92,9 +92,18 @@ object Catalogo {
         return listOfNotNull(propio) + otros
     }
 
-    /** Referrer de Play Store para medir qué juego trae instalaciones a cuál. */
-    fun referrer(origen: String, destino: String) =
-        "utm_source=$origen&utm_medium=cross_promo&utm_campaign=gokapigo_home&utm_content=$destino"
+    /**
+     * El juego del ribbon «Juega también»: uno que el usuario no tenga instalado (solo juegos, no apps), rotando con
+     * [turno] para que cada vez salga otro. null = ya los tiene todos (el ribbon no sale).
+     */
+    fun recomendado(carrusel: List<ItemCatalogo>, instalados: Set<String>, turno: Int): ItemCatalogo? {
+        val candidatos = carrusel.drop(1).filter { !it.esApp && it.id !in instalados }
+        return candidatos.getOrNull(Math.floorMod(turno, candidatos.size.coerceAtLeast(1)))
+    }
+
+    /** Referrer de Play Store para medir qué juego trae instalaciones a cuál (y desde dónde: carrusel o ribbon). */
+    fun referrer(origen: String, destino: String, campana: String = "gokapigo_home") =
+        "utm_source=$origen&utm_medium=cross_promo&utm_campaign=$campana&utm_content=$destino"
 
     /** Solo se abren o instalan paquetes del estudio. */
     const val PREFIJO = "com.gokapigo."

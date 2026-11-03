@@ -1,7 +1,9 @@
 package com.gokapigo.home
 
 import android.os.Build
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -83,7 +85,8 @@ import kotlin.math.min
 /**
  * Portada GoKapiGo Home. El juego propio queda al centro del carrusel; a los lados asoman los demás juegos y apps
  * públicos del estudio. Al centrar otro: ABRIR (instalado) o INSTALAR GRATIS (Play Store con referrer).
- * Sin banner: los anuncios van solo durante la partida (regla del estudio).
+ * Sin banner de anuncios (van solo durante la partida, regla del estudio). Arriba, el ribbon «Juega también» promociona un
+ * juego del estudio que el usuario no tiene instalado (rota cada vez que se abre la portada).
  *
  * @param subtitulo nivel o modo actual del juego propio (ya traducido por el juego).
  * @param precioSinAnuncios el precio localizado de Billing; null = solo «Sin anuncios».
@@ -178,6 +181,9 @@ fun GoKapiGoHome(
                     BotonIcono(Iconos.ajustes, t.ajustes, onAjustes)
                 }
             }
+
+            // Ribbon «Juega también»: solo con el juego propio al centro (con otro al centro ya está su INSTALAR).
+            if (esPropio) RibbonJuegaTambien(propioId, Modifier.padding(top = 12.dp), fuenteTexto, incluirApps, onPromo = onPromo)
 
             Spacer(Modifier.weight(1f))
 
@@ -277,6 +283,77 @@ fun GoKapiGoHome(
                 }
             }
             Spacer(Modifier.weight(1f))
+        }
+    }
+}
+
+/**
+ * Ribbon «Juega también»: un juego del estudio que el usuario no tiene instalado (rota cada vez que se muestra).
+ * Todo el ribbon abre su ficha en Play. Va en la portada y se puede poner en otras pantallas (p. ej. al pasar de nivel):
+ * [lugar] distingue en el referrer de dónde vino la instalación. Si el usuario ya tiene todos los juegos, no sale nada.
+ */
+@Composable
+fun RibbonJuegaTambien(
+    propioId: String,
+    modifier: Modifier = Modifier,
+    fuenteTexto: FontFamily = FontFamily.Default,
+    incluirApps: Boolean = true,
+    lugar: String = "home",
+    onPromo: (ItemCatalogo, String) -> Unit = { _, _ -> },
+) {
+    val ctx = LocalContext.current
+    val puente = remember { PuenteHome(ctx.applicationContext) }
+    val t = Textos.de(LocalConfiguration.current.locales[0].toLanguageTag())
+    val lista = remember { Catalogo.carrusel(puente.catalogoGuardado(), propioId, incluirApps) }
+    val turno = remember { puente.turnoRibbon() }
+    var instalados by remember { mutableStateOf<Set<String>?>(null) }   // null = aún no se sabe: no sale
+    val vida = LocalLifecycleOwner.current
+    DisposableEffect(vida) {
+        val obs = LifecycleEventObserver { _, e ->
+            if (e == Lifecycle.Event.ON_RESUME) instalados = lista.filter { puente.instalado(it.paquete) }.map { it.id }.toSet()
+        }
+        vida.lifecycle.addObserver(obs)
+        onDispose { vida.lifecycle.removeObserver(obs) }
+    }
+    val r = instalados?.let { Catalogo.recomendado(lista, it, turno) }
+    var icono by remember(r) { mutableStateOf(r?.let { puente.iconoLocal(it) }) }
+    LaunchedEffect(r) { if (r != null && icono == null) icono = puente.descargarIcono(r) ?: puente.iconoLocal(r) }
+    val estilo = { tam: Int, peso: FontWeight, color: Color -> TextStyle(fontFamily = fuenteTexto, fontSize = tam.sp, fontWeight = peso, color = color) }
+    AnimatedVisibility(r != null, modifier, enter = fadeIn(tween(400))) {
+        r?.let { item ->
+            Ribbon(item, icono, t, estilo) {
+                onPromo(item, "ribbon_$lugar")
+                puente.abrirTienda(item.paquete, Catalogo.referrer(propioId, item.id, if (lugar == "home") "gokapigo_ribbon" else "gokapigo_ribbon_$lugar"))
+            }
+        }
+    }
+}
+
+@Composable
+private fun Ribbon(item: ItemCatalogo, img: ImageBitmap?, t: TextosHome, estilo: (Int, FontWeight, Color) -> TextStyle, onClick: () -> Unit) {
+    val color = Color(item.color)
+    val forma = RoundedCornerShape(16.dp)
+    Row(
+        Modifier.widthIn(max = 360.dp).fillMaxWidth().clip(forma)
+            .background(Brush.horizontalGradient(listOf(lerp(color, Color.Black, 0.25f), lerp(color, Color.Black, 0.55f))))
+            .clickable(onClickLabel = "${t.instalar} ${item.nombre}", onClick = onClick).padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        val fi = RoundedCornerShape(10.dp)
+        Box(Modifier.size(42.dp).clip(fi).background(color), contentAlignment = Alignment.Center) {
+            if (img != null) Image(img, null, Modifier.fillMaxSize())
+        }
+        Column(Modifier.weight(1f).padding(horizontal = 10.dp)) {
+            Text(t.tambien.uppercase(), maxLines = 1, style = estilo(11, FontWeight.ExtraBold, Color.White.copy(alpha = 0.7f)).copy(letterSpacing = 0.6.sp))
+            Text(item.nombre, maxLines = 1, overflow = TextOverflow.Ellipsis, style = estilo(16, FontWeight.ExtraBold, Color.White))
+        }
+        Row(
+            Modifier.clip(CircleShape).background(Color(0xFFFFFBF5)).padding(start = 10.dp, end = 12.dp, top = 7.dp, bottom = 7.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(Iconos.instalar, null, Modifier.size(15.dp), colorFilter = ColorFilter.tint(Color(0xFF1A1A1A)))
+            Spacer(Modifier.width(5.dp))
+            Text(t.gratis, maxLines = 1, style = estilo(13, FontWeight.ExtraBold, Color(0xFF1A1A1A)))
         }
     }
 }
