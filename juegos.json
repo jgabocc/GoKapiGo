@@ -1,6 +1,6 @@
 [
   {"id": "sandblockpuzzle", "type": "game", "name": "Sand Block Puzzle", "package": "com.gokapigo.sandblockpuzzle", "repo": "SandBlockPuzzle", "color": "#E0A83A", "public": true, "listed": true},
-  {"id": "arrowescape", "type": "game", "name": "Arrow Escape", "package": "com.gokapigo.arrowescape", "repo": "ArrowScape", "color": "#3A6FE0", "public": false, "listed": true},
+  {"id": "arrowescape", "type": "game", "name": "Arrow Escape", "package": "com.gokapigo.arrowescape", "repo": "ArrowScape", "color": "#3A6FE0", "public": true, "listed": true},
   {"id": "aquasorting", "type": "game", "name": "Aqua Sorting", "package": "com.gokapigo.aquasorting", "repo": "AquaSort", "color": "#38B6FF", "public": true, "listed": true},
   {"id": "nutsboltssort", "type": "game", "name": "Nuts & Bolts Sort", "package": "com.gokapigo.nutsboltssort", "repo": "Nuts-Bolts-Sort", "color": "#E5484D", "public": true, "listed": true},
   {"id": "colorblockslide", "type": "game", "name": "Color Block Slide", "package": "com.gokapigo.colorblockslide", "repo": "ColorBlockSlide", "color": "#33507A", "public": true, "listed": true},
