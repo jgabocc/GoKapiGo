@@ -36,6 +36,7 @@ def config(juego_id):
         "name": yo["name"], "color": yo.get("color", "#fb7b00"),
         "logo": _webp(os.path.join(ESTUDIO, "landing", "img", "logo.webp"), 320),
         "me": icono(yo), "icons": [icono(j) for j in otros],
+        "store": "https://play.google.com/store/apps/details?id=" + yo["package"],
     }
 
 

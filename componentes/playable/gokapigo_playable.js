@@ -13,6 +13,15 @@
       setTimeout(function () { d.parentNode && d.parentNode.removeChild(d); cb(); }, 450);
     }, 1500);
   }
+  // Fuera de un anuncio de verdad (el HTML abierto suelto en el teléfono o en la PC) la salida de la red no hace nada y el
+  // final quedaba sin salida: ahí se abre la ficha de Play. Dentro del anuncio (siempre en un iframe) va la salida de la red.
+  var instalar = P.install;
+  P.install = function () {
+    var suelto = false;
+    try { suelto = window.top === window; } catch (_) { suelto = false; }
+    if (suelto && C.store) { window.location.href = C.store; return; }
+    try { instalar(); } catch (_) { if (C.store) window.location.href = C.store; }
+  };
   var listo = P.ready;
   P.ready = function (cb) {
     var empezar = function () { intro(cb); };
