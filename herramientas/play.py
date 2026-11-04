@@ -92,7 +92,7 @@ def subir_ficha(ed, paquete, edit, carpeta):
     return idiomas
 
 
-def publicar(api, clave, version, pista="production", ficha=False, borrador=False, prueba=False, porcentaje=None):
+def publicar(api, clave, version, pista="production", ficha=False, borrador=False, prueba=False, porcentaje=None, prioridad=None):
     carpeta, paquete = JUEGOS[clave]
     aabs = glob.glob(os.path.join(RAIZ, carpeta, "salida", f"*-{version}.aab"))
     if len(aabs) != 1:
@@ -111,6 +111,9 @@ def publicar(api, clave, version, pista="production", ficha=False, borrador=Fals
                    "status": "draft" if borrador else ("inProgress" if porcentaje else "completed")}
         if porcentaje and not borrador:
             release["userFraction"] = porcentaje / 100
+        # prioridad de actualización dentro de la app (0-5): 5 = crítica, UpdateManager la instala de inmediato
+        if prioridad is not None:
+            release["inAppUpdatePriority"] = prioridad
         ed.tracks().update(packageName=paquete, editId=edit, track=pista, body={"track": pista, "releases": [release]}).execute()
         if prueba:
             ed.validate(packageName=paquete, editId=edit).execute()
@@ -162,15 +165,16 @@ if __name__ == "__main__":
     p.add_argument("--borrador", action="store_true")
     p.add_argument("--prueba", action="store_true")
     p.add_argument("--porcentaje", type=float, help="lanzamiento gradual (p. ej. 20 = 20 %% de usuarios)")
+    p.add_argument("--prioridad", type=int, choices=range(6), help="prioridad de actualización en la app: 5 = crítica (inmediata)")
     a = p.parse_args()
     api = servicio()
     if a.orden == "estado":
         estado(api)
     elif a.orden == "publicar":
-        publicar(api, a.juego_o_version, a.version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje)
+        publicar(api, a.juego_o_version, a.version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje, a.prioridad)
     elif a.orden == "ficha":
         solo_ficha(api, a.juego_o_version, a.prueba)
     else:
         ok = [c for c in PUBLICADOS if glob.glob(os.path.join(RAIZ, JUEGOS[c][0], "salida", f"*-{a.juego_o_version}.aab"))
-              and publicar(api, c, a.juego_o_version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje)]
+              and publicar(api, c, a.juego_o_version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje, a.prioridad)]
         print(f"\n{len(ok)} juegos listos: {', '.join(ok)}")
