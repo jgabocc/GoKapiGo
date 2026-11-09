@@ -27,12 +27,12 @@ TEXTOS = {
         "es-419": {"gancho": "¡Ordena el agua por colores!", "boton": "Jugar gratis",
                    "titulos": ["Ordena el agua por colores", "Puzzle de agua relajante", "Llena cada tubo de un color", "Juega gratis sin internet", "Aqua Sorting"],
                    "descripciones": ["Vierte el agua de un tubo a otro hasta que cada uno quede de un solo color.",
-                                     "Un puzzle relajante para tu mente, con cientos de niveles y tubo extra.",
+                                     "Un puzzle relajante para tu mente, con miles de niveles y tubo extra.",
                                      "Gratis y sin internet. ¿Cuántos niveles puedes resolver?"]},
         "pt-BR": {"gancho": "Separe a água por cores!", "boton": "Jogar grátis",
                   "titulos": ["Separe a água por cores", "Puzzle de água relaxante", "Encha cada tubo de uma cor", "Jogue grátis sem internet", "Aqua Sorting"],
                   "descripciones": ["Despeje a água de um tubo para outro até cada um ficar de uma só cor.",
-                                    "Um puzzle relaxante para a mente, com centenas de níveis e tubo extra.",
+                                    "Um puzzle relaxante para a mente, com milhares de níveis e tubo extra.",
                                     "Grátis e sem internet. Quantos níveis você consegue resolver?"]},
     },
     "sand": {
@@ -107,7 +107,9 @@ def pieza(w, h, juego, loc, cfg, color):
     im = fondo(w, h, color); d = ImageDraw.Draw(im)
     t = TEXTOS[juego][loc]
     texto_centrado(d, w, int(h * .045), t["gancho"], fuente(int(w * .07)), maximo=w * .9)
-    cap = Image.open(os.path.join(base, "phoneScreenshots", f"{cfg['captura']}.png")).convert("RGB")
+    # campanas/google-ads/fuente/<idioma>.png, si existe, manda sobre la captura de la ficha
+    propia = os.path.join(RAIZ, cfg["carpeta"], "campanas", "google-ads", "fuente", f"{loc}.png")
+    cap = Image.open(propia if os.path.exists(propia) else os.path.join(base, "phoneScreenshots", f"{cfg['captura']}.png")).convert("RGB")
     alto = int(h * .62); ancho = int(alto * cap.width / cap.height)
     cap = redondear(cap.resize((ancho, alto), Image.LANCZOS), int(ancho * .07))
     x, y = (w - ancho) // 2, int(h * .15)
@@ -116,10 +118,10 @@ def pieza(w, h, juego, loc, cfg, color):
     im.paste(sombra.filter(ImageFilter.GaussianBlur(18)), (0, 0), sombra.filter(ImageFilter.GaussianBlur(18)))
     im.paste(cap, (x, y), cap)
     # abajo: icono, nombre y botón
-    ic = redondear(Image.open(os.path.join(base, "icon.png")).convert("RGB").resize((int(h * .1),) * 2, Image.LANCZOS), int(h * .022))
+    ic = redondear(Image.open(os.path.join(base, "icon.png")).convert("RGB").resize((int(h * .085),) * 2, Image.LANCZOS), int(h * .019))
     nombre = json.load(open(os.path.join(RAIZ, "GoKapiGo", "juegos.json"), encoding="utf-8"))
     nombre = next(j["name"] for j in nombre if j["id"] == cfg["id"])
-    yb = int(h * .8); fn = fuente(int(h * .042))
+    yb = int(h * .785); fn = fuente(int(h * .04))
     tw = ic.width + 24 + d.textlength(nombre, font=fn)
     x0 = int((w - tw) / 2)
     im.paste(ic, (x0, yb), ic)
