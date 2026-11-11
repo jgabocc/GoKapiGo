@@ -1,5 +1,28 @@
 package com.gokapigo.home
 
+import androidx.compose.animation.core.RepeatMode
+
+import androidx.compose.animation.core.infiniteRepeatable
+
+import androidx.compose.animation.core.animateFloat
+
+import androidx.compose.animation.core.rememberInfiniteTransition
+
+import androidx.compose.animation.core.animateFloatAsState
+
+import androidx.compose.foundation.interaction.DragInteraction
+
+import androidx.compose.foundation.gestures.animateScrollBy
+
+import kotlinx.coroutines.delay
+
+import androidx.compose.runtime.saveable.rememberSaveable
+
+import androidx.compose.animation.core.spring
+
+import androidx.compose.animation.core.FastOutSlowInEasing
+
+
 import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -143,6 +166,31 @@ fun GoKapiGoHome(
     }
 
     val pager = rememberPagerState { lista.size }
+    // Pista «deslízame»: al abrir, el carrusel se corre un poco (asoma el juego siguiente) y vuelve con rebote, dos veces.
+    // Una vez por apertura; si el jugador toca, se detiene.
+    // Se repite cada pocos segundos mientras se esté en la portada, con el juego propio al centro.
+    // En cuanto el jugador desliza el carrusel él mismo, deja de hacerlo (ya sabe que se mueve).
+    var yaDeslizo by rememberSaveable { mutableStateOf(false) }
+    val densidad = androidx.compose.ui.platform.LocalDensity.current
+    LaunchedEffect(pager) { pager.interactionSource.interactions.collect { if (it is DragInteraction.Start) yaDeslizo = true } }
+    LaunchedEffect(lista.size, yaDeslizo) {
+        if (yaDeslizo || lista.size < 2) return@LaunchedEffect
+        val paso = with(densidad) { 70.dp.toPx() }
+        delay(700)
+        while (true) {
+            if (pager.currentPage == 0 && !pager.isScrollInProgress) {
+                try {
+                    repeat(2) {
+                        pager.animateScrollBy(paso, tween(260, easing = FastOutSlowInEasing))
+                        pager.animateScrollBy(-paso, spring(dampingRatio = 0.45f, stiffness = 380f))
+                        delay(180)
+                    }
+                } catch (_: Exception) { }
+                if (pager.currentPage != 0) pager.scrollToPage(0)
+            }
+            delay(4500)
+        }
+    }
     val actual = lista.getOrNull(pager.currentPage) ?: lista.firstOrNull() ?: return
     val propio = lista.first()
     val esPropio = actual.id == propioId
@@ -227,6 +275,18 @@ fun GoKapiGoHome(
                 Modifier.padding(top = 4.dp), style = estilo(15, FontWeight.Bold, tenue),
             )
             if (lista.size > 1) Puntos(lista.size, pager.currentPage, blanco, Modifier.padding(top = 12.dp))
+            // Pista «desliza»: hasta que el jugador mueve el carrusel él mismo (el espacio se mantiene: nada salta).
+            if (lista.size > 1) {
+                val visible by animateFloatAsState(if (yaDeslizo) 0f else 1f, tween(400), label = "pista")
+                val latido = rememberInfiniteTransition(label = "latido")
+                val brillo by latido.animateFloat(0.55f, 1f, infiniteRepeatable(tween(900), RepeatMode.Reverse), label = "brillo")
+                Text(
+                    "‹  ${t.desliza}  ›",
+                    Modifier.padding(top = 10.dp).graphicsLayer { alpha = visible * brillo }
+                        .clip(CircleShape).background(Color.Black.copy(alpha = 0.30f)).padding(horizontal = 14.dp, vertical = 5.dp),
+                    style = estilo(13, FontWeight.ExtraBold, blanco),
+                )
+            }
 
             Spacer(Modifier.height(18.dp))
             val instalado = actual.id in instalados

@@ -6,6 +6,8 @@ data class TextosHome(
     val reclamado: String, val sinAnuncios: String, val otroJuego: String, val otraApp: String, val app: String,
     val idioma: String, val calificar: String, val compartir: String, val ajustes: String, val estrellas: String,
     val tambien: String, val gratis: String,
+    /** Pista bajo el carrusel. */
+    val desliza: String = "Swipe for more games",
 )
 
 object Textos {
@@ -28,5 +30,10 @@ object Textos {
     fun de(idioma: String): TextosHome = when (idioma.take(2).lowercase()) {
         "es" -> ES; "pt" -> PT; "fr" -> FR; "de" -> DE; "pl" -> PL; "ru" -> RU
         else -> EN
-    }
+    }.let { it.copy(desliza = DESLIZA[idioma.take(2).lowercase()] ?: it.desliza) }
+
+    private val DESLIZA = mapOf(
+        "es" to "Desliza para ver más juegos", "pt" to "Deslize para ver mais jogos", "fr" to "Glisse pour voir d'autres jeux",
+        "de" to "Wische für mehr Spiele", "pl" to "Przesuń, aby zobaczyć więcej gier", "ru" to "Листай, чтобы увидеть другие игры",
+    )
 }
