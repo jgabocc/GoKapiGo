@@ -44,6 +44,7 @@ JUEGOS = {
     "solitaire": ("solitaire-classic", "com.gokapigo.solitaireclassic"),
     "arrow": ("arrow-escape", "com.gokapigo.arrowescape"),
     "shapeblast": ("shape-blast", "com.gokapigo.shapeblast"),
+    "spaceattack": ("space-attack", "com.gokapigo.spaceattack"),
     "docs": ("docs-arxhive", "com.gokapigo.docsarxhive"),
     "laberinto": ("minotaurs Maze", "com.gokapigo.laberinto"),
 }
