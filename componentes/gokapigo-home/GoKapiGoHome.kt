@@ -175,10 +175,14 @@ fun GoKapiGoHome(
     LaunchedEffect(pager) { pager.interactionSource.interactions.collect { if (it is DragInteraction.Start) yaDeslizo = true } }
     LaunchedEffect(lista.size, yaDeslizo) {
         if (yaDeslizo || lista.size < 2) return@LaunchedEffect
-        val paso = with(densidad) { 70.dp.toPx() }
+        val maxPaso = with(densidad) { 70.dp.toPx() }
         delay(700)
         while (true) {
             if (pager.currentPage == 0 && !pager.isScrollInProgress) {
+                // como mucho el 30 % de una tarjeta: nunca cruza la mitad, así el carrusel no cambia de juego (ni el
+                // título salta) en pantallas angostas, donde 70 dp ya pasaban de la mitad
+                val pagina = pager.layoutInfo.pageSize + pager.layoutInfo.pageSpacing
+                val paso = if (pagina > 0) minOf(maxPaso, pagina * 0.3f) else maxPaso * 0.5f
                 try {
                     repeat(2) {
                         pager.animateScrollBy(paso, tween(260, easing = FastOutSlowInEasing))
