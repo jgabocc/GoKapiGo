@@ -48,7 +48,7 @@ JUEGOS = {
     "laberinto": ("minotaurs Maze", "com.gokapigo.laberinto"),
 }
 # los que ya están públicos en Play (los que toca "todos")
-PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis", "pipe", "onestroke", "maze", "shapetiles", "solitaire"]
+PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis", "pipe", "onestroke", "maze", "shapetiles", "solitaire", "arrow", "shapeblast"]
 IMAGENES = {"icon.png": "icon", "featureGraphic.png": "featureGraphic"}
 
 

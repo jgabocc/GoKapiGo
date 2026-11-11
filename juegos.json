@@ -12,6 +12,6 @@
   {"id": "mazequest", "type": "game", "name": "Maze Quest", "package": "com.gokapigo.mazequest", "repo": "MazeQuest", "color": "#2E9E5B", "public": true, "listed": true},
   {"id": "shapetiles", "type": "game", "name": "Shape Tiles", "package": "com.gokapigo.shapetiles", "repo": "ShapeTiles", "color": "#4A5BD8", "public": true, "listed": true},
   {"id": "solitaireclassic", "type": "game", "name": "Solitaire Classic", "package": "com.gokapigo.solitaireclassic", "repo": "SolitaireClassic", "color": "#1F7A45", "public": true, "listed": true},
-  {"id": "shapeblast", "type": "game", "name": "Shape Blast", "package": "com.gokapigo.shapeblast", "repo": "ShapeBlast", "color": "#FF6B2C", "public": false, "listed": false},
+  {"id": "shapeblast", "type": "game", "name": "Shape Blast", "package": "com.gokapigo.shapeblast", "repo": "ShapeBlast", "color": "#2B1B4D", "public": true, "listed": true},
   {"id": "docsarxhive", "type": "app", "name": "docsArxhive", "package": "com.gokapigo.docsarxhive", "repo": "docsArxhive", "color": "#F2B705", "public": false, "listed": true}
 ]
