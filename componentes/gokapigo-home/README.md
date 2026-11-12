@@ -20,7 +20,12 @@ Nació de la prueba de concepto web (`GoKapiGo_Home_v1_1.zip`), reescrita en nat
   (solo con el juego propio al centro) y **en la ventana de nivel completado** de cada juego:
   `RibbonJuegaTambien(propioId, Modifier.fillMaxWidth(), Nunito, lugar = "nivel", onPromo = …)` bajo los botones.
   Referrer `utm_campaign=gokapigo_ribbon` (portada) o `gokapigo_ribbon_<lugar>`. Si ya los tiene todos, no sale nada.
-- 7 idiomas (es, en, pt, fr, de, pl, ru) según el idioma de la app; si no, inglés.
+- 15 idiomas (es, en, pt, fr, de, pl, ru + 2026-11-12: th, ko, ja, zh simplificado, hi, id, tr, vi) según el idioma de la app;
+  si no, inglés (también el chino tradicional, que no tiene recursos). `Textos.codigo()` normaliza ("in"/"id" → "id",
+  "zh-Hans-CN" → "zh"). Los textos con el orden cambiado usan plantillas: `volverA(nombre)` ({x}) y `diaN(n)` ({n}).
+- **Vietnamita:** `Textos.fuente(fuente, idioma)` devuelve la fuente del sistema, porque las fuentes de los juegos no traen
+  sus letras (ạ, ơ, ư…) y Android mezclaría dos fuentes dentro de una palabra. La portada ya la aplica; cada juego debe
+  pasar también sus propios estilos por ella (ver `GoKapiGo/herramientas/IDIOMAS.md`).
 - **Icono:** el propio sale del icono de la app (capas del icono adaptable, cuadrado, sin máscara) = el de Play.
   Los instalados, de su icono real; los demás, del PNG de Play en `capibaradev.com/iconos/<id>.png` (guardado 7 días).
   Ningún juego vuelve a dibujar su logo aparte.

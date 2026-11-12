@@ -7,9 +7,9 @@ La credencial es el JSON de la cuenta de servicio, fuera de todo repo:  D:\\GOOG
 Uso:
   python play.py estado                          # versión publicada y en revisión de cada juego
   python play.py publicar sand 1.1               # sube salida/*-1.1.aab + salida/notas-1.1.txt a producción y lo envía a revisión
-  python play.py publicar sand 1.1 --ficha       # además sube la ficha (textos e imágenes) de store-listing/ en los 9 idiomas
+  python play.py publicar sand 1.1 --ficha       # además sube la ficha (textos e imágenes) de store-listing/ (hasta 17 idiomas, IDIOMAS_PLAY)
   python play.py publicar sand 1.1 --pista internal --borrador    # a la prueba interna, como borrador (no se envía)
-  python play.py ficha sand                      # solo la ficha (textos e imágenes de los 9 idiomas)
+  python play.py ficha sand                      # solo la ficha (textos e imágenes de cada idioma en store-listing/)
   python play.py todos 1.1 [--ficha]             # publicar en los juegos ya públicos (PUBLICADOS) que tengan el AAB
   --prueba   prepara todo en Play pero NO confirma (valida AAB, notas y ficha sin cambiar nada)
 """
@@ -52,6 +52,9 @@ JUEGOS = {
 # los que ya están públicos en Play (los que toca "todos")
 PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis", "pipe", "onestroke", "maze", "shapetiles", "solitaire", "arrow", "shapeblast"]
 IMAGENES = {"icon.png": "icon", "featureGraphic.png": "featureGraphic"}
+# Idiomas de la ficha (carpetas de store-listing/ y etiquetas de notas-<ver>.txt): 7 + 8 nuevos (2026-11-12), códigos exactos de Play
+IDIOMAS_PLAY = ["es-419", "es-ES", "en-US", "pt-BR", "pt-PT", "fr-FR", "de-DE", "pl-PL", "ru-RU",
+                "th", "ko-KR", "ja-JP", "zh-CN", "hi-IN", "id", "tr-TR", "vi"]
 
 
 def servicio():
@@ -72,6 +75,9 @@ def notas(archivo):
 def subir_ficha(ed, paquete, edit, carpeta):
     base = os.path.join(RAIZ, carpeta, "store-listing")
     idiomas = sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d)))
+    raros = [d for d in idiomas if d not in IDIOMAS_PLAY]
+    if raros:      # p. ej. "id-ID", "zh" o "values-in": Play rechazaría la ficha a mitad de la subida
+        raise SystemExit(f"store-listing con carpetas que no son idiomas de Play: {', '.join(raros)} (válidos: {', '.join(IDIOMAS_PLAY)})")
     for loc in idiomas:
         d = os.path.join(base, loc)
         leer = lambda n: open(os.path.join(d, n), encoding="utf-8").read().strip()
@@ -109,6 +115,9 @@ def publicar(api, clave, version, pista="production", ficha=False, borrador=Fals
                                  media_body=MediaFileUpload(aabs[0], mimetype="application/octet-stream", resumable=True)).execute()["versionCode"]
         # Play solo acepta notas en idiomas que la ficha tiene
         ns = [n for n in notas(os.path.join(RAIZ, carpeta, "salida", f"notas-{version}.txt")) if n["language"] in idiomas]
+        sin_notas = [l for l in idiomas if l not in {n["language"] for n in ns}]
+        if ns and sin_notas:
+            print(f"   aviso: sin notas de la versión en {', '.join(sin_notas)} (Play muestra las del idioma por defecto)")
         release = {"name": version, "versionCodes": [str(vc)], "releaseNotes": ns,
                    "status": "draft" if borrador else ("inProgress" if porcentaje else "completed")}
         if porcentaje and not borrador:

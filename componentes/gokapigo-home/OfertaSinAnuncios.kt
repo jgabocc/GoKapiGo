@@ -79,13 +79,21 @@ class OfertaSinAnuncios(context: Context) {
 
 private class TextosOferta(val titulo: String, val sub: String, val boton: String, val listo: String)
 
-private fun textos(idioma: String) = when (idioma.take(2).lowercase()) {
+private fun textos(idioma: String) = when (Textos.codigo(idioma)) {
     "es" -> TextosOferta("¿20 minutos sin anuncios?", "Mira un video y no verás anuncios a pantalla completa", "Ver video", "¡Listo! 20 minutos sin anuncios")
     "pt" -> TextosOferta("20 minutos sem anúncios?", "Assista a um vídeo e fique sem anúncios em tela cheia", "Ver vídeo", "Pronto! 20 minutos sem anúncios")
     "fr" -> TextosOferta("20 minutes sans pub ?", "Regarde une vidéo et évite les pubs plein écran", "Voir la vidéo", "C'est fait ! 20 minutes sans pub")
     "de" -> TextosOferta("20 Minuten ohne Werbung?", "Sieh dir ein Video an – keine Vollbildwerbung", "Video ansehen", "Fertig! 20 Minuten ohne Werbung")
     "pl" -> TextosOferta("20 minut bez reklam?", "Obejrzyj film i pomiń reklamy pełnoekranowe", "Obejrzyj film", "Gotowe! 20 minut bez reklam")
     "ru" -> TextosOferta("20 минут без рекламы?", "Посмотрите видео — и никакой полноэкранной рекламы", "Смотреть видео", "Готово! 20 минут без рекламы")
+    "th" -> TextosOferta("ไม่มีโฆษณา 20 นาทีไหม?", "ดูวิดีโอหนึ่งคลิป แล้วไม่ต้องเจอโฆษณาเต็มจอ", "ดูวิดีโอ", "เรียบร้อย! ไม่มีโฆษณา 20 นาที")
+    "ko" -> TextosOferta("20분 동안 광고 없이?", "동영상 하나만 보면 전면 광고가 사라져요", "동영상 보기", "완료! 20분 동안 광고 없음")
+    "ja" -> TextosOferta("20分間、広告なしにする？", "動画を1本見ると全画面広告が出なくなります", "動画を見る", "完了！20分間広告なし")
+    "zh" -> TextosOferta("20分钟无广告？", "看一段视频，就不会再有全屏广告", "看视频", "搞定！20分钟无广告")
+    "hi" -> TextosOferta("20 मिनट बिना विज्ञापन?", "एक वीडियो देखें और फ़ुल-स्क्रीन विज्ञापनों से छुट्टी पाएँ", "वीडियो देखें", "हो गया! 20 मिनट बिना विज्ञापन")
+    "id" -> TextosOferta("20 menit tanpa iklan?", "Tonton video dan bebas dari iklan layar penuh", "Tonton video", "Beres! 20 menit tanpa iklan")
+    "tr" -> TextosOferta("20 dakika reklamsız?", "Bir video izle, tam ekran reklam görme", "Video izle", "Tamam! 20 dakika reklamsız")
+    "vi" -> TextosOferta("20 phút không quảng cáo?", "Xem một video để không gặp quảng cáo toàn màn hình", "Xem video", "Xong! 20 phút không quảng cáo")
     else -> TextosOferta("20 minutes without ads?", "Watch a video and skip full-screen ads", "Watch video", "Done! 20 minutes without ads")
 }
 

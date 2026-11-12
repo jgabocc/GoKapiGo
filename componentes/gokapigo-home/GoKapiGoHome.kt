@@ -143,7 +143,12 @@ fun GoKapiGoHome(
 ) {
     val ctx = LocalContext.current
     val puente = remember { PuenteHome(ctx.applicationContext) }
-    val t = Textos.de(LocalConfiguration.current.locales[0].toLanguageTag())
+    val idiomaApp = LocalConfiguration.current.locales[0].toLanguageTag()
+    val t = Textos.de(idiomaApp)
+    val fTitulo = Textos.fuente(fuenteTitulo, idiomaApp)     // vietnamita: fuente del sistema (ver Textos.fuente)
+    // la fuente del título del juego ya es gruesa por sí sola; si se cambió por la del sistema, hay que pedirle el peso
+    val pesoTitulo = if (fTitulo !== fuenteTitulo) FontWeight.ExtraBold else null
+    val fTexto = Textos.fuente(fuenteTexto, idiomaApp)
     var catalogo by remember { mutableStateOf(puente.catalogoGuardado()) }
     val lista = remember(catalogo) { Catalogo.carrusel(catalogo, propioId, incluirApps) }
     var instalados by remember { mutableStateOf(emptySet<String>()) }
@@ -203,7 +208,7 @@ fun GoKapiGoHome(
     val brillo = lerp(colorItem, Color.Black, 0.42f)
     val blanco = Color(0xFFFFFBF5)
     val tenue = blanco.copy(alpha = 0.62f)
-    val estilo = { tam: Int, peso: FontWeight, color: Color -> TextStyle(fontFamily = fuenteTexto, fontSize = tam.sp, fontWeight = peso, color = color) }
+    val estilo = { tam: Int, peso: FontWeight, color: Color -> TextStyle(fontFamily = fTexto, fontSize = tam.sp, fontWeight = peso, color = color) }
 
     Box(
         modifier.fillMaxSize().background(fondo)
@@ -235,7 +240,7 @@ fun GoKapiGoHome(
             }
 
             // Ribbon «Juega también»: solo con el juego propio al centro (con otro al centro ya está su INSTALAR).
-            if (esPropio) RibbonJuegaTambien(propioId, Modifier.padding(top = 12.dp), fuenteTexto, incluirApps, onPromo = onPromo)
+            if (esPropio) RibbonJuegaTambien(propioId, Modifier.padding(top = 12.dp), fTexto, incluirApps, onPromo = onPromo)
 
             Spacer(Modifier.weight(1f))
 
@@ -259,10 +264,10 @@ fun GoKapiGoHome(
                             .clickable(enabled = i != pager.currentPage) { alcance.launch { pager.animateScrollToPage(i) } },
                         contentAlignment = Alignment.Center,
                     ) {
-                        IconoItem(it, iconos[it.id], lado, fuenteTitulo)
+                        IconoItem(it, iconos[it.id], lado, fTitulo, pesoTitulo)
                         if (it.esApp) {
                             Text(
-                                t.app.uppercase(), Modifier.align(Alignment.BottomCenter).clip(CircleShape).background(blanco).padding(horizontal = 10.dp, vertical = 2.dp),
+                                t.app.uppercase(LocalConfiguration.current.locales[0]), Modifier.align(Alignment.BottomCenter).clip(CircleShape).background(blanco).padding(horizontal = 10.dp, vertical = 2.dp),
                                 style = estilo(11, FontWeight.ExtraBold, Color(0xFF1A1A1A)),
                             )
                         }
@@ -272,7 +277,7 @@ fun GoKapiGoHome(
 
             Text(
                 actual.nombre, Modifier.padding(top = 14.dp), maxLines = 2, overflow = TextOverflow.Ellipsis,
-                style = TextStyle(fontFamily = fuenteTitulo, fontSize = 30.sp, lineHeight = 33.sp, color = blanco, textAlign = TextAlign.Center),
+                style = TextStyle(fontFamily = fTitulo, fontWeight = pesoTitulo, fontSize = 30.sp, lineHeight = 33.sp, color = blanco, textAlign = TextAlign.Center),
             )
             Text(
                 if (esPropio) subtitulo else if (actual.esApp) t.otraApp else t.otroJuego,
@@ -299,7 +304,7 @@ fun GoKapiGoHome(
                 instalado -> t.abrir to Iconos.abrir
                 else -> t.instalar to Iconos.instalar
             }
-            BotonGrande(texto, icono, acento, tintaAcento, fuenteTitulo) {
+            BotonGrande(texto, icono, acento, tintaAcento, fTitulo, pesoTitulo) {
                 when {
                     esPropio -> onJugar()
                     instalado -> { onPromo(actual, "open"); puente.abrir(actual.paquete) }
@@ -319,7 +324,7 @@ fun GoKapiGoHome(
                                     )
                                     if (diaRacha > 0) {
                                         Text(
-                                            "${t.dia} $diaRacha", Modifier.align(Alignment.TopEnd).offset(x = 4.dp, y = (-9).dp)
+                                            t.diaN(diaRacha), Modifier.align(Alignment.TopEnd).offset(x = 4.dp, y = (-9).dp)
                                                 .clip(CircleShape).background(Color(0xFFE5484D)).padding(horizontal = 7.dp, vertical = 1.dp),
                                             style = estilo(11, FontWeight.ExtraBold, Color.White),
                                         )
@@ -340,7 +345,7 @@ fun GoKapiGoHome(
                     }
                 } else {
                     Text(
-                        "← ${t.volver} ${propio.nombre}",
+                        "← " + t.volverA(propio.nombre),
                         Modifier.clip(RoundedCornerShape(12.dp)).clickable { alcance.launch { pager.animateScrollToPage(0) } }.padding(horizontal = 14.dp, vertical = 10.dp),
                         style = estilo(15, FontWeight.ExtraBold, tenue),
                     )
@@ -367,7 +372,9 @@ fun RibbonJuegaTambien(
 ) {
     val ctx = LocalContext.current
     val puente = remember { PuenteHome(ctx.applicationContext) }
-    val t = Textos.de(LocalConfiguration.current.locales[0].toLanguageTag())
+    val idiomaApp = LocalConfiguration.current.locales[0].toLanguageTag()
+    val t = Textos.de(idiomaApp)
+    val fTexto = Textos.fuente(fuenteTexto, idiomaApp)
     val lista = remember { Catalogo.carrusel(puente.catalogoGuardado(), propioId, incluirApps) }
     val turno = remember { puente.turnoRibbon() }
     var instalados by remember { mutableStateOf<Set<String>?>(null) }   // null = aún no se sabe: no sale
@@ -382,7 +389,7 @@ fun RibbonJuegaTambien(
     val r = instalados?.let { Catalogo.recomendado(lista, it, turno) }
     var icono by remember(r) { mutableStateOf(r?.let { puente.iconoLocal(it) }) }
     LaunchedEffect(r) { if (r != null && icono == null) icono = puente.descargarIcono(r) ?: puente.iconoLocal(r) }
-    val estilo = { tam: Int, peso: FontWeight, color: Color -> TextStyle(fontFamily = fuenteTexto, fontSize = tam.sp, fontWeight = peso, color = color) }
+    val estilo = { tam: Int, peso: FontWeight, color: Color -> TextStyle(fontFamily = fTexto, fontSize = tam.sp, fontWeight = peso, color = color) }
     AnimatedVisibility(r != null, modifier, enter = fadeIn(tween(400))) {
         r?.let { item ->
             Ribbon(item, icono, t, estilo) {
@@ -408,7 +415,8 @@ private fun Ribbon(item: ItemCatalogo, img: ImageBitmap?, t: TextosHome, estilo:
             if (img != null) Image(img, null, Modifier.fillMaxSize())
         }
         Column(Modifier.weight(1f).padding(horizontal = 10.dp)) {
-            Text(t.tambien.uppercase(), maxLines = 1, style = estilo(11, FontWeight.ExtraBold, Color.White.copy(alpha = 0.7f)).copy(letterSpacing = 0.6.sp))
+            Text(t.tambien.uppercase(LocalConfiguration.current.locales[0]),   // con el idioma: turco i → İ
+                maxLines = 1, style = estilo(11, FontWeight.ExtraBold, Color.White.copy(alpha = 0.7f)).copy(letterSpacing = 0.6.sp))
             Text(item.nombre, maxLines = 1, overflow = TextOverflow.Ellipsis, style = estilo(16, FontWeight.ExtraBold, Color.White))
         }
         Row(
@@ -424,7 +432,7 @@ private fun Ribbon(item: ItemCatalogo, img: ImageBitmap?, t: TextosHome, estilo:
 
 /** Icono de Play del elemento; mientras no hay imagen, un cuadro de su color con las iniciales. */
 @Composable
-private fun IconoItem(item: ItemCatalogo, img: ImageBitmap?, lado: androidx.compose.ui.unit.Dp, fuente: FontFamily) {
+private fun IconoItem(item: ItemCatalogo, img: ImageBitmap?, lado: androidx.compose.ui.unit.Dp, fuente: FontFamily, peso: FontWeight? = null) {
     val forma = RoundedCornerShape(lado * 0.22f)
     Box(
         Modifier.size(lado).shadow(18.dp, forma, ambientColor = Color.Black, spotColor = Color.Black).clip(forma).background(Color(item.color)),
@@ -434,7 +442,7 @@ private fun IconoItem(item: ItemCatalogo, img: ImageBitmap?, lado: androidx.comp
             Image(img, item.nombre, Modifier.fillMaxSize())
         } else {
             val ini = item.nombre.split(' ', '&').filter { it.isNotBlank() }.take(2).joinToString("") { it.take(1) }.uppercase()
-            Text(ini, style = TextStyle(fontFamily = fuente, fontSize = (lado.value * 0.3f).sp, color = Color.White))
+            Text(ini, style = TextStyle(fontFamily = fuente, fontWeight = peso, fontSize = (lado.value * 0.3f).sp, color = Color.White))
         }
     }
 }
@@ -450,7 +458,7 @@ private fun BotonIcono(icono: ImageVector, descripcion: String, onClick: () -> U
 
 /** Botón principal con relieve (sombra sólida debajo), como el PLAY de la portada. */
 @Composable
-private fun BotonGrande(texto: String, icono: ImageVector, fondo: Color, tinta: Color, fuente: FontFamily, onClick: () -> Unit) {
+private fun BotonGrande(texto: String, icono: ImageVector, fondo: Color, tinta: Color, fuente: FontFamily, peso: FontWeight?, onClick: () -> Unit) {
     val hondo = lerp(fondo, Color.Black, 0.28f)
     Row(
         Modifier.widthIn(max = 360.dp).fillMaxWidth()
@@ -460,7 +468,7 @@ private fun BotonGrande(texto: String, icono: ImageVector, fondo: Color, tinta: 
     ) {
         Image(icono, null, Modifier.size(22.dp), colorFilter = ColorFilter.tint(tinta))
         Spacer(Modifier.width(10.dp))
-        Text(texto, maxLines = 1, style = TextStyle(fontFamily = fuente, fontSize = 22.sp, color = tinta))
+        Text(texto, maxLines = 1, style = TextStyle(fontFamily = fuente, fontWeight = peso, fontSize = 22.sp, color = tinta))
     }
 }
 

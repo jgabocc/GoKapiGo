@@ -1,5 +1,8 @@
 # Notas de la versión 1.1 de cada juego en el formato de Play Console (<es-419>…</es-419>): <juego>/salida/notas-1.1.txt
 # Uso: python GoKapiGo/herramientas/notas_version.py
+# Desde 2026-11-12 la ficha tiene hasta 17 idiomas: las notas nuevas (notas-<ver>.txt) llevan también
+# <th> <ko-KR> <ja-JP> <zh-CN> <hi-IN> <id> <tr-TR> <vi> (lista en play.py, IDIOMAS_PLAY). play.py sube solo las
+# de los idiomas que la ficha tiene y avisa de los que faltan. Este script es el de la 1.1 (9 idiomas) y queda así.
 import os
 
 BASE = {

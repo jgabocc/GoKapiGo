@@ -55,10 +55,21 @@ class CatalogoTest {
         assertEquals(0xFF5C7CFF, Catalogo.colorDe("raro"))
     }
 
-    @Test fun textosEnLos7Idiomas() {
+    @Test fun textosEnLos15Idiomas() {
         assertEquals("JUGAR", Textos.de("es-VE").jugar)
         assertEquals("JOGAR", Textos.de("pt-BR").jugar)
-        assertEquals("PLAY", Textos.de("ja").jugar)
-        listOf("es", "en", "pt", "fr", "de", "pl", "ru").forEach { Textos.de(it).run { assertTrue(instalar.isNotBlank() && tambien.isNotBlank() && gratis.isNotBlank()) } }
+        assertEquals("プレイ", Textos.de("ja-JP").jugar)
+        assertEquals("PLAY", Textos.de("sv").jugar)                     // idioma sin traducir → inglés
+        // indonesio con el código viejo de Android y el nuevo; chino: simplificado sí, tradicional va en inglés (sin recursos)
+        assertEquals("MAIN", Textos.de("in").jugar); assertEquals("MAIN", Textos.de("id-ID").jugar)
+        assertEquals("开始游戏", Textos.de("zh-CN").jugar); assertEquals("开始游戏", Textos.de("zh-Hans-CN").jugar)
+        assertEquals("PLAY", Textos.de("zh-TW").jugar); assertEquals("PLAY", Textos.de("zh-Hant-HK").jugar)
+        // orden de palabras: plantillas {x} y {n}
+        assertEquals("Volver a Maze Quest", Textos.de("es").volverA("Maze Quest"))
+        assertEquals("Maze Questに戻る", Textos.de("ja").volverA("Maze Quest"))
+        assertEquals("3日目", Textos.de("ja").diaN(3)); assertEquals("第3天", Textos.de("zh-CN").diaN(3)); assertEquals("Día 3", Textos.de("es").diaN(3))
+        listOf("es", "en", "pt", "fr", "de", "pl", "ru", "th", "ko", "ja", "zh", "hi", "id", "tr", "vi").forEach {
+            Textos.de(it).run { assertTrue(it, instalar.isNotBlank() && tambien.isNotBlank() && gratis.isNotBlank() && desliza.isNotBlank()) }
+        }
     }
 }
