@@ -47,6 +47,7 @@ JUEGOS = {
     "spaceattack": ("space-attack", "com.gokapigo.spaceattack"),
     "docs": ("docs-arxhive", "com.gokapigo.docsarxhive"),
     "laberinto": ("minotaurs Maze", "com.gokapigo.laberinto"),
+    "tinyfort": ("tiny-fort-defense", "com.gokapigo.tinyfortdefense"),
 }
 # los que ya están públicos en Play (los que toca "todos")
 PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis", "pipe", "onestroke", "maze", "shapetiles", "solitaire", "arrow", "shapeblast"]
