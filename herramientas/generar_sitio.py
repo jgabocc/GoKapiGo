@@ -82,7 +82,7 @@ def cintas(portada, publicas):
     def tarjeta(m):
         c = m.group(0)
         if publicas.get(m.group(1)):
-            return c.replace(">", '><span class="ribbon on">Disponible en Google Play</span>', 1)
+            return c.replace(">", '><span class="ribbon on">En Google Play</span>', 1)
         c = re.sub(r'<a class="play"[^>]*>.*?</a>', '<span class="play soon" aria-disabled="true">Próximamente</span>', c, flags=re.S)
         return c.replace(">", '><span class="ribbon soon">Próximamente</span>', 1)
     portada = re.sub(r'<article class="card" data-paquete="([\w.]+)">.*?</article>', tarjeta, portada, flags=re.S)

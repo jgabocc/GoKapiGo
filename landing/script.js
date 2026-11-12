@@ -23,3 +23,15 @@
     });
   });
 })();
+
+// Portada: cuántos juegos hay y la cinta infinita con sus iconos (duplicada para que el bucle no se note).
+(function () {
+  var cards = document.querySelectorAll('#juegos .card');
+  var n = document.querySelector('[data-count="juegos"]');
+  if (n && cards.length) n.textContent = cards.length;
+  var track = document.querySelector('.marquee .track');
+  if (!track) return;
+  var imgs = Array.prototype.map.call(document.querySelectorAll('#juegos .card .icon img, #apps .card .icon img'), function (i) { return i.getAttribute('src'); });
+  var html = imgs.map(function (s) { return '<img src="' + s + '" alt="" width="56" height="56" loading="lazy">'; }).join('');
+  track.innerHTML = html + html;
+})();

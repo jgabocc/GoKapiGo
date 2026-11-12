@@ -4,13 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>GoKapiGo</title>
-  <meta name="claude:viewport-fit-sides" content="cover">
-  <meta name="description" content="GoKapiGo: juegos y apps para Android de un estudio venezolano. Aqua Sorting, Sudoku Master 3000, docsArxhive y más, en Google Play.">
+  <meta name="description" content="GoKapiGo: juegos y apps para Android de un estudio venezolano. Puzzles, arcade y juegos de mesa gratis en Google Play, en 7 idiomas.">
   <meta name="theme-color" content="#0f0c09">
+  <meta property="og:title" content="GoKapiGo · Juegos cortos para ratos cortos">
+  <meta property="og:description" content="Juegos y apps para Android de un estudio venezolano, gratis en Google Play.">
+  <meta property="og:image" content="https://www.capibaradev.com/img/logo.webp">
   <link rel="icon" href="img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,8 +20,8 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="GoKapiGo, inicio">
-      <img src="img/favicon.png" alt="">
-      <span><b>GO</b> KAPI <b>GO</b></span>
+      <img src="img/favicon.png" alt="" width="40" height="40">
+      <span><b>GO</b>KAPI<b>GO</b></span>
     </a>
     <nav class="nav" aria-label="Principal">
       <a href="#juegos">Juegos</a>
@@ -31,34 +33,72 @@
 
 <main>
   <section class="hero">
+    <div class="glow" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="hero-logo">
-        <img src="img/logo.webp" width="640" height="640" alt="Logo de GoKapiGo: un capibara con audífonos, lentes oscuros y un control de videojuegos">
-      </div>
-      <div>
-        <p class="eyebrow">Estudio de juegos y apps · Android</p>
+      <div class="hero-copy">
+        <p class="pill"><span class="dot"></span>Estudio venezolano · Android</p>
         <h1>Juegos cortos para <em>ratos cortos</em>.</h1>
-        <p class="lede">Somos GoKapiGo, un estudio venezolano. Hacemos puzzles y juegos de mesa para la cola del banco, la parada del bus o los cinco minutos antes de dormir. Abres el juego y ya estás jugando.</p>
-        <ul class="facts">
-          <li>Sin pop-ups al abrir</li>
-          <li>Sin registro ni cuentas</li>
-          <li>Quitar anuncios: pago único</li>
-        </ul>
+        <p class="lede">Puzzles, arcade y juegos de mesa para la cola del banco, la parada del bus o los cinco minutos antes de dormir. Abres el juego y ya estás jugando.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#juegos">Ver los juegos</a>
-          <a class="btn btn-ghost" href="privacy/">Política de privacidad</a>
+          <a class="btn btn-primary" href="#juegos">Ver los juegos <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#por-que">Por qué GoKapiGo</a>
         </div>
+        <dl class="stats">
+          <div><dt data-count="juegos">15</dt><dd>juegos</dd></div>
+          <div><dt>7</dt><dd>idiomas</dd></div>
+          <div><dt>0</dt><dd>registros</dd></div>
+        </dl>
+      </div>
+      <div class="hero-art">
+        <div class="orb" aria-hidden="true"></div>
+        <img class="logo" src="img/logo.webp" width="640" height="640" alt="Logo de GoKapiGo: un capibara con audífonos, lentes oscuros y un control de videojuegos">
+        <img class="float f1" src="iconos/aquasorting.png" alt="" width="192" height="192" aria-hidden="true">
+        <img class="float f2" src="iconos/parchisparty.png" alt="" width="192" height="192" aria-hidden="true">
+        <img class="float f3" src="iconos/spaceattack.png" alt="" width="192" height="192" aria-hidden="true">
+        <img class="float f4" src="iconos/sudokumaster3000.png" alt="" width="192" height="192" aria-hidden="true">
       </div>
     </div>
   </section>
 
-  <div class="rule" aria-hidden="true"><i></i></div>
+  <div class="marquee" aria-hidden="true"><div class="track"></div></div>
+
+  <section class="why" id="por-que">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Hechos con cariño</p>
+        <h2>Simples de abrir, difíciles de soltar</h2>
+      </div>
+      <div class="bento">
+        <article class="feat big">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+          <h3>Abres y ya estás jugando</h3>
+          <p>Sin pop-ups al abrir, sin tutoriales eternos. Un toque y arrancas donde lo dejaste.</p>
+        </article>
+        <article class="feat">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <h3>Sin registro</h3>
+          <p>No pedimos cuentas ni correos. Tu progreso vive en tu teléfono.</p>
+        </article>
+        <article class="feat">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span>
+          <h3>7 idiomas</h3>
+          <p>Español, inglés, portugués, francés, alemán, polaco y ruso.</p>
+        </article>
+        <article class="feat wide">
+          <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg></span>
+          <h3>Quitar anuncios: un solo pago</h3>
+          <p>Los juegos son gratis. Si los anuncios te molestan, los quitas para siempre con un pago único.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
   <section class="games" id="juegos">
     <div class="wrap">
       <div class="section-head">
+        <p class="kicker">Catálogo</p>
         <h2>Nuestros juegos</h2>
-        <p>Todos gratis en Google Play, en 7 idiomas. Toca cualquiera para ir a su página en la tienda.</p>
+        <p>Todos gratis en Google Play. Toca cualquiera para ir a su página en la tienda.</p>
       </div>
 
       <div class="grid">
@@ -186,13 +226,13 @@
       </div>
     </div>
   </section>
-  <div class="rule" aria-hidden="true"><i></i></div>
 
   <section class="games" id="apps">
     <div class="wrap">
       <div class="section-head">
+        <p class="kicker">Utilidades</p>
         <h2>Nuestras apps</h2>
-        <p>Herramientas para el día a día, con el mismo cuidado que nuestros juegos. Toca cualquiera para ir a su página en Google Play.</p>
+        <p>Herramientas para el día a día, con el mismo cuidado que nuestros juegos.</p>
       </div>
 
       <div class="grid">
@@ -212,6 +252,10 @@
 
 <footer class="footer">
   <div class="wrap">
+    <a class="brand" href="index.html" aria-label="GoKapiGo, inicio">
+      <img src="img/favicon.png" alt="" width="32" height="32">
+      <span><b>GO</b>KAPI<b>GO</b></span>
+    </a>
     <span>© <span id="year">2026</span> GoKapiGo · Capibara Comercializadora C.A. · Mérida, Venezuela</span>
     <a href="privacy/">Política de privacidad</a>
   </div>
