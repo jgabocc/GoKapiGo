@@ -122,6 +122,8 @@ fun GoKapiGoHome(
     estrellas: Int,
     subtitulo: String,
     acento: Color,
+    /** Color de fondo de la portada mientras se ve este juego; sin él se usa el del catálogo. */
+    colorPropio: Color? = null,
     tintaAcento: Color,
     onJugar: () -> Unit,
     onAjustes: () -> Unit,
@@ -203,7 +205,7 @@ fun GoKapiGoHome(
     val actual = lista.getOrNull(pager.currentPage) ?: lista.firstOrNull() ?: return
     val propio = lista.first()
     val esPropio = actual.id == propioId
-    val colorItem by animateColorAsState(Color(actual.color), tween(350), label = "fondo")
+    val colorItem by animateColorAsState(if (esPropio && colorPropio != null) colorPropio else Color(actual.color), tween(350), label = "fondo")
     val fondo = lerp(colorItem, Color.Black, 0.80f)
     val brillo = lerp(colorItem, Color.Black, 0.42f)
     val blanco = Color(0xFFFFFBF5)
