@@ -200,7 +200,8 @@ def selector(juego):
             extra = "".join(f', {pref}"{v[2]}", "{v[3]}")' for v in NUEVOS.values())
         else:
             print(f"? {os.path.relpath(f, juego)}: selector con «:», agrégalo a mano"); continue
-        s = s[:m.end()] + extra + s[m.end():]
+        fin = m.end() - 1 if sep == "to" and s[m.end() - 1] == ")" else m.end()   # «… "ru" to "Русский")»: antes del )
+        s = s[:fin] + extra + s[fin:]
         open(f, "w", encoding="utf-8", newline="").write(s)
         print(f"✓ {os.path.relpath(f, juego)}: selector + 8 idiomas (revisa que la lista tenga scroll)")
         hecho = True
