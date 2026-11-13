@@ -83,7 +83,8 @@ def textos(f):
     return d
 
 
-MARCA = re.compile(r"\{[A-Za-z_][A-Za-z0-9_]*\}|%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[sdfxXc%]")
+# sin la bandera « » de printf: «+15% fire» o «20 % de daño» son porcentajes, no marcadores
+MARCA = re.compile(r"\{[A-Za-z_][A-Za-z0-9_]*\}|%(?:\d+\$)?[-#+0,(]*\d*(?:\.\d+)?[sdfxXc%]")
 
 
 def marcadores(s):
