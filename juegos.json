@@ -14,5 +14,6 @@
   {"id": "solitaireclassic", "type": "game", "name": "Solitaire Classic", "package": "com.gokapigo.solitaireclassic", "repo": "SolitaireClassic", "color": "#1F7A45", "public": true, "listed": true},
   {"id": "shapeblast", "type": "game", "name": "Shape Blast", "package": "com.gokapigo.shapeblast", "repo": "ShapeBlast", "color": "#2B1B4D", "public": true, "listed": true},
   {"id": "spaceattack", "type": "game", "name": "Space Attack", "package": "com.gokapigo.spaceattack", "repo": "SpaceAttack", "color": "#1A1440", "public": false, "listed": true},
+  {"id": "tinyfortdefense", "type": "game", "name": "Tiny Fort Defense", "package": "com.gokapigo.tinyfortdefense", "repo": "TinyFortDefense", "color": "#6FAF3B", "public": false, "listed": false},
   {"id": "docsarxhive", "type": "app", "name": "docsArxhive", "package": "com.gokapigo.docsarxhive", "repo": "docsArxhive", "color": "#F2B705", "public": false, "listed": true}
 ]
