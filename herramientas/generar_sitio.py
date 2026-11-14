@@ -1,6 +1,6 @@
 """Arma el sitio del estudio (GitHub Pages) en _site/:
 - landing/: portada del estudio (index.html, styles.css, script.js, img/) tal cual.
-- privacy/index.html: elige el idioma del navegador (o ?lang=xx) y abre privacy/<idioma>.html (inglés si no es uno de los 7).
+- privacy/index.html: elige el idioma del navegador (o ?lang=xx) y abre privacy/<idioma>.html (inglés si no es uno de los 15; zh-CN/zh-TW → zh).
 - privacy/<idioma>.html: la política común, desde politica/<idioma>.html, con la barra y el pie de la portada.
 - delete-data/index.html: cómo pedir el borrado de datos (es + en), para Play Console.
 - privacidad.html: enlace antiguo, lleva a privacy/es.html.
@@ -15,7 +15,11 @@ import catalogo
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "_site")
 EMAIL = "ayuda@capibaradev.com"
-LANGS = {"en": "English", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "pl": "Polski", "ru": "Русский"}
+LANGS = {"en": "English", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "pl": "Polski", "ru": "Русский",
+         "th": "ไทย", "ko": "한국어", "ja": "日本語", "zh": "简体中文", "hi": "हिन्दी", "id": "Bahasa Indonesia",
+         "tr": "Türkçe", "vi": "Tiếng Việt"}
+# código para <html lang> / lang="" cuando no es el mismo de LANGS
+HTML_LANG = {"zh": "zh-Hans"}
 # título, "Juegos", "Privacidad", "Volver a los juegos"
 UI = {
     "en": ("Privacy Policy", "Games", "Privacy", "Back to the games"),
@@ -25,12 +29,20 @@ UI = {
     "de": ("Datenschutzerklärung", "Spiele", "Datenschutz", "Zurück zu den Spielen"),
     "pl": ("Polityka prywatności", "Gry", "Prywatność", "Wróć do gier"),
     "ru": ("Политика конфиденциальности", "Игры", "Конфиденциальность", "Вернуться к играм"),
+    "th": ("นโยบายความเป็นส่วนตัว", "เกม", "ความเป็นส่วนตัว", "กลับไปที่เกม"),
+    "ko": ("개인정보 처리방침", "게임", "개인정보", "게임으로 돌아가기"),
+    "ja": ("プライバシーポリシー", "ゲーム", "プライバシー", "ゲームに戻る"),
+    "zh": ("隐私政策", "游戏", "隐私", "返回游戏"),
+    "hi": ("गोपनीयता नीति", "गेम", "गोपनीयता", "गेम पर वापस जाएँ"),
+    "id": ("Kebijakan Privasi", "Game", "Privasi", "Kembali ke game"),
+    "tr": ("Gizlilik Politikası", "Oyunlar", "Gizlilik", "Oyunlara dön"),
+    "vi": ("Chính sách quyền riêng tư", "Trò chơi", "Quyền riêng tư", "Quay lại trò chơi"),
 }
 
 
 def head(title, lang, desc, base):
     return f"""<!doctype html>
-<html lang="{lang}">
+<html lang="{HTML_LANG.get(lang, lang)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -104,13 +116,13 @@ def main():
     for k in LANGS:
         body = open(os.path.join(ROOT, "politica", f"{k}.html"), encoding="utf-8").read()
         langs = '<nav class="langs">' + "".join(
-            f'<a href="{c}.html" lang="{c}" class="{"on" if c == k else ""}">{n}</a>' for c, n in LANGS.items()) + "</nav>"
+            f'<a href="{c}.html" lang="{HTML_LANG.get(c, c)}" class="{"on" if c == k else ""}">{n}</a>' for c, n in LANGS.items()) + "</nav>"
         out = (head(f"{UI[k][0]} · GoKapiGo", k, UI[k][0], "../") + topbar(k, "../")
                + f'<main class="legal"><div class="wrap"><article>{langs}{body}</article></div></main>\n' + footer(k, "../"))
         open(os.path.join(OUT, "privacy", f"{k}.html"), "w", encoding="utf-8", newline="\n").write(out)
 
     # privacy/: elige idioma (navegador o ?lang=xx); sin JS muestra los enlaces
-    links = "".join(f'<li><a href="{k}.html" lang="{k}">{UI[k][0]} ({v})</a></li>' for k, v in LANGS.items())
+    links = "".join(f'<li><a href="{k}.html" lang="{HTML_LANG.get(k, k)}">{UI[k][0]} ({v})</a></li>' for k, v in LANGS.items())
     script = """<script>(function(){var L=%s,q=(location.search.match(/[?&]lang=([a-z]{2})/)||[])[1],
 c=[q].concat(navigator.languages||[navigator.language||"en"]);for(var i=0;i<c.length;i++){var k=String(c[i]||"").slice(0,2).toLowerCase();
 if(L.indexOf(k)>=0){location.replace(k+".html"+location.hash);return}}location.replace("en.html"+location.hash)})();</script>
