@@ -50,7 +50,7 @@ JUEGOS = {
     "tinyfort": ("tiny-fort-defense", "com.gokapigo.tinyfortdefense"),
 }
 # los que ya están públicos en Play (los que toca "todos")
-PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis", "pipe", "onestroke", "maze", "shapetiles", "solitaire", "arrow", "shapeblast"]
+PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis", "pipe", "onestroke", "maze", "shapetiles", "solitaire", "arrow", "shapeblast", "spaceattack", "tinyfort"]
 IMAGENES = {"icon.png": "icon", "featureGraphic.png": "featureGraphic"}
 # Idiomas de la ficha (carpetas de store-listing/ y etiquetas de notas-<ver>.txt): 7 + 8 nuevos (2026-11-12), códigos exactos de Play
 IDIOMAS_PLAY = ["es-419", "es-ES", "en-US", "pt-BR", "pt-PT", "fr-FR", "de-DE", "pl-PL", "ru-RU",
