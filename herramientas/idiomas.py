@@ -43,6 +43,7 @@ NUEVOS = {
     "ja": ("values-ja", "ja", "ja", "日本語", ["ja-JP"]),
     "ko": ("values-ko", "ko", "ko", "한국어", ["ko-KR"]),
     "zh": ("values-zh-rCN", "zh-rCN", "zh-CN", "简体中文", ["zh-CN"]),     # solo chino simplificado
+    "az": ("values-az", "az", "az", "Azərbaycanca", ["az-AZ"]),           # azerbaiyano (dueño 2026-11-15)
 }
 TODOS = {**VIEJOS, **NUEVOS}
 PLAY = [p for v in TODOS.values() for p in v[4]]          # 17 idiomas de la ficha de Play
@@ -187,23 +188,24 @@ def selector(juego):
         if not m:
             continue
         sep = m.group(1)
-        if '"日本語"' in s:
+        faltan = [v for v in NUEVOS.values() if f'"{v[3]}"' not in s]
+        if not faltan:
             print(f"= {os.path.relpath(f, juego)}: el selector ya tiene los idiomas nuevos"); hecho = True; continue
         if sep == "to":
-            extra = "".join(f', "{v[2]}" to "{v[3]}"' for v in NUEVOS.values())
+            extra = "".join(f', "{v[2]}" to "{v[3]}"' for v in faltan)
         elif sep == ",":       # Pair("ru", "Русский") o listOf("ru", "Русский")
             cierre = s[m.end() - 1] == ")"
             if not cierre:
                 print(f"? {os.path.relpath(f, juego)}: patrón raro en el selector, agrégalo a mano"); continue
             ini = s.rfind("(", 0, m.start())
             pref = s[s.rfind(" ", 0, ini) + 1:ini + 1] if ini > 0 else "Pair("
-            extra = "".join(f', {pref}"{v[2]}", "{v[3]}")' for v in NUEVOS.values())
+            extra = "".join(f', {pref}"{v[2]}", "{v[3]}")' for v in faltan)
         else:
             print(f"? {os.path.relpath(f, juego)}: selector con «:», agrégalo a mano"); continue
         fin = m.end() - 1 if sep == "to" and s[m.end() - 1] == ")" else m.end()   # «… "ru" to "Русский")»: antes del )
         s = s[:fin] + extra + s[fin:]
         open(f, "w", encoding="utf-8", newline="").write(s)
-        print(f"✓ {os.path.relpath(f, juego)}: selector + 8 idiomas (revisa que la lista tenga scroll)")
+        print(f"✓ {os.path.relpath(f, juego)}: selector + {len(faltan)} idiomas (revisa que la lista tenga scroll)")
         hecho = True
     if not hecho:
         print("· no encontré un selector de idiomas con «\"ru\" to \"Русский\"» (si el juego no tiene selector, nada que hacer)")
@@ -232,13 +234,17 @@ def fuentes(juego):
         print("· falta fontTools (pip install fonttools)"); return
     vi = "ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếềểễệỉịọỏốồổỗộớờởỡợụủứừửữựỳỵỷỹ"
     tr = "ğşıİĞŞ"
-    malas, sin_tr = [], []
+    az = "əƏ"
+    malas, sin_tr, sin_az = [], [], []
     for f in sorted(glob.glob(os.path.join(res_de(juego), "font", "*.[to]tf"))):
         cm = TTFont(f).getBestCmap()
         fv = sum(1 for c in vi if ord(c) not in cm)
         ft = "".join(c for c in tr if ord(c) not in cm)
+        fa = "".join(c for c in az if ord(c) not in cm)
         print(f"  {os.path.basename(f):24} vietnamita: {'completa' if not fv else f'faltan {fv} letras'}"
-              f" · turco: {'completo' if not ft else 'faltan ' + ft}")
+              f" · turco: {'completo' if not ft else 'faltan ' + ft} · azerbaiyano: {'completo' if not (ft or fa) else 'faltan ' + ft + fa}")
+        if ft or fa:
+            sin_az.append(os.path.basename(f))
         if fv:
             malas.append(f)
         if ft:
@@ -248,6 +254,8 @@ def fuentes(juego):
               if os.sep + "home" + os.sep not in k)
     if sin_tr:
         print(f"  → {', '.join(sin_tr)} tampoco tiene turco: con esa fuente usar Textos.fuente(f, idioma, setOf(\"vi\", \"tr\"))")
+    if sin_az:
+        print(f"  → {', '.join(sin_az)} no tiene azerbaiyano (ə): agregar \"az\" al tercer parámetro de Textos.fuente con esa fuente")
     if malas and not usa:
         print("  → hay fuentes sin vietnamita y el juego no usa Textos.fuente(): aplicarlo en sus estilos (IDIOMAS.md, paso 5)")
     elif malas:

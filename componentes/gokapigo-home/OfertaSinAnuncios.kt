@@ -93,6 +93,7 @@ private fun textos(idioma: String) = when (Textos.codigo(idioma)) {
     "hi" -> TextosOferta("20 मिनट बिना विज्ञापन?", "एक वीडियो देखें और फ़ुल-स्क्रीन विज्ञापनों से छुट्टी पाएँ", "वीडियो देखें", "हो गया! 20 मिनट बिना विज्ञापन")
     "id" -> TextosOferta("20 menit tanpa iklan?", "Tonton video dan bebas dari iklan layar penuh", "Tonton video", "Beres! 20 menit tanpa iklan")
     "tr" -> TextosOferta("20 dakika reklamsız?", "Bir video izle, tam ekran reklam görme", "Video izle", "Tamam! 20 dakika reklamsız")
+    "az" -> TextosOferta("20 dəqiqə reklamsız?", "Bir video izlə, tam ekran reklam görmə", "Video izlə", "Hazırdır! 20 dəqiqə reklamsız")
     "vi" -> TextosOferta("20 phút không quảng cáo?", "Xem một video để không gặp quảng cáo toàn màn hình", "Xem video", "Xong! 20 phút không quảng cáo")
     else -> TextosOferta("20 minutes without ads?", "Watch a video and skip full-screen ads", "Watch video", "Done! 20 minutes without ads")
 }
@@ -100,7 +101,7 @@ private fun textos(idioma: String) = when (Textos.codigo(idioma)) {
 /** Tarjeta de la oferta y aviso de «listo». Ponerla sobre la pantalla del juego, alineada abajo. */
 @Composable
 fun TarjetaOfertaSinAnuncios(o: OfertaSinAnuncios, modifier: Modifier = Modifier) {
-    val t = textos(LocalConfiguration.current.locales[0].language)
+    val t = textos(com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales).language)
     val naranja = Color(0xFFFB7B00)
     val crema = Color(0xFFFFFBF5)
     LaunchedEffect(o) { while (true) { delay(15_000); o.revisar() } }      // al acabar los 20 min, vuelve a ofrecerla

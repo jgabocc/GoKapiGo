@@ -54,7 +54,7 @@ PUBLICADOS = ["sand", "aqua", "nuts", "color", "sudoku", "shapespin", "parchis",
 IMAGENES = {"icon.png": "icon", "featureGraphic.png": "featureGraphic"}
 # Idiomas de la ficha (carpetas de store-listing/ y etiquetas de notas-<ver>.txt): 7 + 8 nuevos (2026-11-12), códigos exactos de Play
 IDIOMAS_PLAY = ["es-419", "es-ES", "en-US", "pt-BR", "pt-PT", "fr-FR", "de-DE", "pl-PL", "ru-RU",
-                "th", "ko-KR", "ja-JP", "zh-CN", "hi-IN", "id", "tr-TR", "vi"]
+                "th", "ko-KR", "ja-JP", "zh-CN", "hi-IN", "id", "tr-TR", "vi", "az-AZ"]
 
 
 def servicio():

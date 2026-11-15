@@ -145,7 +145,7 @@ fun GoKapiGoHome(
 ) {
     val ctx = LocalContext.current
     val puente = remember { PuenteHome(ctx.applicationContext) }
-    val idiomaApp = LocalConfiguration.current.locales[0].toLanguageTag()
+    val idiomaApp = com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales).toLanguageTag()
     val t = Textos.de(idiomaApp)
     val fTitulo = Textos.fuente(fuenteTitulo, idiomaApp)     // vietnamita: fuente del sistema (ver Textos.fuente)
     // la fuente del título del juego ya es gruesa por sí sola; si se cambió por la del sistema, hay que pedirle el peso
@@ -230,7 +230,7 @@ fun GoKapiGoHome(
                     Box(Modifier.size(24.dp).background(Color(0xFFF5C518), CircleShape), contentAlignment = Alignment.Center) {
                         Image(Iconos.estrella, null, Modifier.size(14.dp), colorFilter = ColorFilter.tint(Color(0xFF3A2600)))
                     }
-                    Text(" " + NumberFormat.getInstance(LocalConfiguration.current.locales[0]).format(estrellas), style = estilo(16, FontWeight.ExtraBold, blanco))
+                    Text(" " + NumberFormat.getInstance(com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales)).format(estrellas), style = estilo(16, FontWeight.ExtraBold, blanco))
                 }
                 Spacer(Modifier.weight(1f))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -269,7 +269,7 @@ fun GoKapiGoHome(
                         IconoItem(it, iconos[it.id], lado, fTitulo, pesoTitulo)
                         if (it.esApp) {
                             Text(
-                                t.app.uppercase(LocalConfiguration.current.locales[0]), Modifier.align(Alignment.BottomCenter).clip(CircleShape).background(blanco).padding(horizontal = 10.dp, vertical = 2.dp),
+                                t.app.uppercase(com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales)), Modifier.align(Alignment.BottomCenter).clip(CircleShape).background(blanco).padding(horizontal = 10.dp, vertical = 2.dp),
                                 style = estilo(11, FontWeight.ExtraBold, Color(0xFF1A1A1A)),
                             )
                         }
@@ -374,7 +374,7 @@ fun RibbonJuegaTambien(
 ) {
     val ctx = LocalContext.current
     val puente = remember { PuenteHome(ctx.applicationContext) }
-    val idiomaApp = LocalConfiguration.current.locales[0].toLanguageTag()
+    val idiomaApp = com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales).toLanguageTag()
     val t = Textos.de(idiomaApp)
     val fTexto = Textos.fuente(fuenteTexto, idiomaApp)
     val lista = remember { Catalogo.carrusel(puente.catalogoGuardado(), propioId, incluirApps) }
@@ -417,7 +417,7 @@ private fun Ribbon(item: ItemCatalogo, img: ImageBitmap?, t: TextosHome, estilo:
             if (img != null) Image(img, null, Modifier.fillMaxSize())
         }
         Column(Modifier.weight(1f).padding(horizontal = 10.dp)) {
-            Text(t.tambien.uppercase(LocalConfiguration.current.locales[0]),   // con el idioma: turco i → İ
+            Text(t.tambien.uppercase(com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales)),   // con el idioma: turco i → İ
                 maxLines = 1, style = estilo(11, FontWeight.ExtraBold, Color.White.copy(alpha = 0.7f)).copy(letterSpacing = 0.6.sp))
             Text(item.nombre, maxLines = 1, overflow = TextOverflow.Ellipsis, style = estilo(16, FontWeight.ExtraBold, Color.White))
         }

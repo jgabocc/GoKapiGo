@@ -2,7 +2,7 @@ package com.gokapigo.home
 
 import androidx.compose.ui.text.font.FontFamily
 
-/** Textos de la portada en los 15 idiomas del estudio (sin recursos, para que el paquete sea igual en todos los juegos). */
+/** Textos de la portada en los 16 idiomas del estudio (sin recursos, para que el paquete sea igual en todos los juegos). */
 data class TextosHome(
     val jugar: String, val abrir: String, val instalar: String,
     /** «Volver a» + nombre; si lleva {x}, el nombre va en ese lugar (coreano, japonés, hindi…). Usar [volverA]. */
@@ -64,6 +64,10 @@ object Textos {
     private val TR = TextosHome("OYNA", "AÇ", "ÜCRETSİZ YÜKLE", "Geri dön: {x}", "Günlük hediye", "{n}. gün", "Alındı", "Reklamsız",
         "Başka bir GoKapiGo oyunu", "GoKapiGo uygulaması", "App", "Dil", "Puan ver", "Paylaş", "Ayarlar", "yıldız", "Bunu da dene", "ÜCRETSİZ",
         "Daha fazla oyun için kaydır")
+    // azerbaiyano (dueño 2026-11-15: los jugadores de Azerbaiyán juegan 45 min al día). «Gün {n}»: el sufijo ordinal cambia con el número
+    private val AZ = TextosHome("OYNA", "AÇ", "PULSUZ YÜKLƏ", "Geri qayıt: {x}", "Gündəlik hədiyyə", "Gün {n}", "Alındı", "Reklamsız",
+        "Başqa GoKapiGo oyunu", "GoKapiGo tətbiqi", "Tətbiq", "Dil", "Qiymətləndir", "Paylaş", "Ayarlar", "ulduz", "Bunu da sına", "PULSUZ",
+        "Daha çox oyun üçün sürüşdür")
     private val VI = TextosHome("CHƠI", "MỞ", "CÀI MIỄN PHÍ", "Quay lại", "Quà hằng ngày", "Ngày", "Đã nhận", "Không quảng cáo",
         "Trò chơi khác của GoKapiGo", "Ứng dụng GoKapiGo", "App", "Ngôn ngữ", "Đánh giá", "Chia sẻ", "Cài đặt", "sao", "Chơi thử", "MIỄN PHÍ",
         "Vuốt để xem thêm trò chơi")
@@ -83,7 +87,7 @@ object Textos {
     /** Por idioma de la app ("es", "pt-BR", "zh-Hans-CN"…); si no está, inglés. */
     fun de(idioma: String): TextosHome = when (codigo(idioma)) {
         "es" -> ES; "pt" -> PT; "fr" -> FR; "de" -> DE; "pl" -> PL; "ru" -> RU
-        "th" -> TH; "ko" -> KO; "ja" -> JA; "zh" -> ZH; "hi" -> HI; "id" -> ID; "tr" -> TR; "vi" -> VI
+        "th" -> TH; "ko" -> KO; "ja" -> JA; "zh" -> ZH; "hi" -> HI; "id" -> ID; "tr" -> TR; "vi" -> VI; "az" -> AZ
         else -> EN
     }
 
@@ -92,10 +96,11 @@ object Textos {
      * del vietnamita (ạ, ơ, ư, ế…): Android las sacaría de otra fuente letra por letra y las palabras se verían mezcladas.
      * En vietnamita se usa la del sistema (Roboto, completa). Tailandés, hindi, chino, japonés y coreano no necesitan
      * nada: esas letras no existen en la fuente del juego y salen enteras de la del sistema (Noto).
-     * [sinLetras]: idiomas cuyas letras le faltan a esa fuente (`idiomas.py fuentes` lo dice). Por defecto el vietnamita;
+     * [sinLetras]: idiomas cuyas letras le faltan a esa fuente (`idiomas.py fuentes` lo dice). Por defecto vietnamita y
+     * azerbaiyano (casi ninguna fuente de los juegos trae la «ə»; 2026-11-15);
      * p. ej. Baloo 2 tampoco tiene ğ ş ı İ → `Textos.fuente(Baloo, idioma, setOf("vi", "tr"))`. Si la fuente sí las tiene
      * todas (Nunito completa), `emptySet()`.
      */
-    fun fuente(f: FontFamily, idioma: String, sinLetras: Set<String> = setOf("vi")): FontFamily =
+    fun fuente(f: FontFamily, idioma: String, sinLetras: Set<String> = setOf("vi", "az")): FontFamily =
         if (codigo(idioma) in sinLetras) FontFamily.Default else f
 }
