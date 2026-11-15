@@ -131,6 +131,8 @@ fun GoKapiGoHome(
     modifier: Modifier = Modifier,
     fuenteTitulo: FontFamily = FontFamily.Default,
     fuenteTexto: FontFamily = FontFamily.Default,
+    /** Idiomas cuyas letras les faltan a las fuentes del juego (ver Textos.fuente). Si las fuentes traen la «ə», setOf("vi"). */
+    sinLetras: Set<String> = setOf("vi", "az"),
     regaloDisponible: Boolean = false,
     diaRacha: Int = 0,
     onRegalo: (() -> Unit)? = null,
@@ -147,10 +149,10 @@ fun GoKapiGoHome(
     val puente = remember { PuenteHome(ctx.applicationContext) }
     val idiomaApp = com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales).toLanguageTag()
     val t = Textos.de(idiomaApp)
-    val fTitulo = Textos.fuente(fuenteTitulo, idiomaApp)     // vietnamita: fuente del sistema (ver Textos.fuente)
+    val fTitulo = Textos.fuente(fuenteTitulo, idiomaApp, sinLetras)     // vietnamita: fuente del sistema (ver Textos.fuente)
     // la fuente del título del juego ya es gruesa por sí sola; si se cambió por la del sistema, hay que pedirle el peso
     val pesoTitulo = if (fTitulo !== fuenteTitulo) FontWeight.ExtraBold else null
-    val fTexto = Textos.fuente(fuenteTexto, idiomaApp)
+    val fTexto = Textos.fuente(fuenteTexto, idiomaApp, sinLetras)
     var catalogo by remember { mutableStateOf(puente.catalogoGuardado()) }
     val lista = remember(catalogo) { Catalogo.carrusel(catalogo, propioId, incluirApps) }
     var instalados by remember { mutableStateOf(emptySet<String>()) }
@@ -242,7 +244,7 @@ fun GoKapiGoHome(
             }
 
             // Ribbon «Juega también»: solo con el juego propio al centro (con otro al centro ya está su INSTALAR).
-            if (esPropio) RibbonJuegaTambien(propioId, Modifier.padding(top = 12.dp), fTexto, incluirApps, onPromo = onPromo)
+            if (esPropio) RibbonJuegaTambien(propioId, Modifier.padding(top = 12.dp), fTexto, sinLetras = sinLetras, incluirApps = incluirApps, onPromo = onPromo)
 
             Spacer(Modifier.weight(1f))
 
@@ -368,6 +370,7 @@ fun RibbonJuegaTambien(
     propioId: String,
     modifier: Modifier = Modifier,
     fuenteTexto: FontFamily = FontFamily.Default,
+    sinLetras: Set<String> = setOf("vi", "az"),
     incluirApps: Boolean = true,
     lugar: String = "home",
     onPromo: (ItemCatalogo, String) -> Unit = { _, _ -> },
@@ -376,7 +379,7 @@ fun RibbonJuegaTambien(
     val puente = remember { PuenteHome(ctx.applicationContext) }
     val idiomaApp = com.gokapigo.home.Idioma.de(LocalConfiguration.current.locales).toLanguageTag()
     val t = Textos.de(idiomaApp)
-    val fTexto = Textos.fuente(fuenteTexto, idiomaApp)
+    val fTexto = Textos.fuente(fuenteTexto, idiomaApp, sinLetras)
     val lista = remember { Catalogo.carrusel(puente.catalogoGuardado(), propioId, incluirApps) }
     val turno = remember { puente.turnoRibbon() }
     var instalados by remember { mutableStateOf<Set<String>?>(null) }   // null = aún no se sabe: no sale
