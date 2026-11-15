@@ -100,7 +100,7 @@ def subir_ficha(ed, paquete, edit, carpeta):
     return idiomas
 
 
-def publicar(api, clave, version, pista="production", ficha=False, borrador=False, prueba=False, porcentaje=None, prioridad=None):
+def publicar(api, clave, version, pista="production", ficha=False, borrador=False, prueba=False, porcentaje=None, prioridad=None, reemplazar=False):
     carpeta, paquete = JUEGOS[clave]
     aabs = glob.glob(os.path.join(RAIZ, carpeta, "salida", f"*-{version}.aab"))
     if len(aabs) != 1:
@@ -130,8 +130,11 @@ def publicar(api, clave, version, pista="production", ficha=False, borrador=Fals
             ed.validate(packageName=paquete, editId=edit).execute()
             ed.delete(packageName=paquete, editId=edit).execute()
             print(f"✓ {clave}: PRUEBA ok (versionCode {vc}, notas en {len(ns)} idiomas) — no se cambió nada en Play"); return True
-        ed.commit(packageName=paquete, editId=edit).execute()
-        print(f"✓ {clave}: {version} (versionCode {vc}) en {pista}{' como borrador' if borrador else ', enviada a revisión'}; notas en {len(ns)} idiomas")
+        # crítica (prioridad 5): si la versión anterior sigue en revisión, Play dejaba esta en «cambios que aún no se envían
+        # para su revisión» (2026-11-15). Con CANCEL_IN_REVIEW_AND_SUBMIT reemplaza a la que está en revisión y se envía ya.
+        extra = {"changesInReviewBehavior": "CANCEL_IN_REVIEW_AND_SUBMIT"} if (reemplazar or prioridad == 5) and not borrador else {}
+        ed.commit(packageName=paquete, editId=edit, **extra).execute()
+        print(f"✓ {clave}: {version} (versionCode {vc}) en {pista}{' como borrador' if borrador else ', enviada a revisión'}{' (reemplaza la que estaba en revisión)' if extra else ''}; notas en {len(ns)} idiomas")
         return True
     except HttpError as e:
         try: ed.delete(packageName=paquete, editId=edit).execute()
@@ -177,15 +180,16 @@ if __name__ == "__main__":
     p.add_argument("--prueba", action="store_true")
     p.add_argument("--porcentaje", type=float, help="lanzamiento gradual (p. ej. 20 = 20 %% de usuarios)")
     p.add_argument("--prioridad", type=int, choices=range(6), help="prioridad de actualización en la app: 5 = crítica (inmediata)")
+    p.add_argument("--reemplazar", action="store_true", help="si hay una versión en revisión, la reemplaza y envía esta (siempre con --prioridad 5)")
     a = p.parse_args()
     api = servicio()
     if a.orden == "estado":
         estado(api)
     elif a.orden == "publicar":
-        publicar(api, a.juego_o_version, a.version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje, a.prioridad)
+        publicar(api, a.juego_o_version, a.version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje, a.prioridad, a.reemplazar)
     elif a.orden == "ficha":
         solo_ficha(api, a.juego_o_version, a.prueba)
     else:
         ok = [c for c in PUBLICADOS if glob.glob(os.path.join(RAIZ, JUEGOS[c][0], "salida", f"*-{a.juego_o_version}.aab"))
-              and publicar(api, c, a.juego_o_version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje, a.prioridad)]
+              and publicar(api, c, a.juego_o_version, a.pista, a.ficha, a.borrador, a.prueba, a.porcentaje, a.prioridad, a.reemplazar)]
         print(f"\n{len(ok)} juegos listos: {', '.join(ok)}")
