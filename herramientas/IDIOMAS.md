@@ -12,6 +12,7 @@ De 7 a 15 idiomas, dentro del juego **y** en la ficha de Play. Piloto hecho en *
 | Japonés | `values-ja` | `ja` | `"ja" to "日本語"` | `ja-JP` |
 | Coreano | `values-ko` | `ko` | `"ko" to "한국어"` | `ko-KR` |
 | Chino simplificado | `values-zh-rCN` | `zh-rCN` | `"zh-CN" to "简体中文"` | `zh-CN` |
+| Azerbaiyano (2026-11-15) | `values-az` | `az` | `"az" to "Azərbaycanca"` | `az-AZ` |
 
 Los códigos de Play están comprobados en la ayuda de Play Console (lista de idiomas). `play.py` rechaza otra carpeta.
 Indonesio: en el emulador `cmd locale set-app-locales <paquete> --locales id` (o `in`) sirve `values-in`; probado.
@@ -94,3 +95,11 @@ Indonesio: en el emulador `cmd locale set-app-locales <paquete> --locales id` (o
 ## Qué no hace la herramienta
 
 No traduce (eso lo escribe el agente, con calidad nativa) y no sube nada a Play.
+
+## Azerbaiyano (16.º idioma, 2026-11-15)
+
+Registro con «sən». Casi ninguna fuente trae la «ə»: `Textos.fuente` ya cae al sistema en `az` (por defecto `setOf("vi", "az")`).
+Evitar sufijos ordinales que cambian con el número: «Səviyyə {n}», «Gün {n}», «Oyna: Səviyyə {n}».
+Glosario: Oyna · Səviyyə {n} · ulduz · İpucu · Yenidən başla · Geri al · Gündəlik hədiyyə · {d} günlük seriya · Video izlə ·
+Reklamları sil · Ulduz paketləri · Ayarlar · Dil / Avtomatik · Səs / Vibrasiya · Rəng korluğu rejimi · Məxfilik siyasəti ·
+Bağla · Ana səhifəyə qayıt · Səviyyə tamamlandı! · gediş · Pulsuz · Personajlar · Google Play Oyunlar · Rekord · Gəmi · Anqar · Qüllə · Dalğa.
