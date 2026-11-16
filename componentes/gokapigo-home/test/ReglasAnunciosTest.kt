@@ -87,6 +87,25 @@ class ReglasAnunciosTest {
         assertEquals(300_000L, ReglasAnuncios.espera(1000))
     }
 
+    // ---------- intersticial por reiniciar (dueño 2026-11-16)
+
+    @Test fun alTercerReinicioToca() {
+        assertFalse(ReglasAnuncios.tocaPorReinicio(1, 10, false, 999_999))
+        assertFalse(ReglasAnuncios.tocaPorReinicio(2, 10, false, 999_999))
+        assertTrue(ReglasAnuncios.tocaPorReinicio(3, 10, false, 999_999))
+    }
+
+    @Test fun siNoPasaronLos2MinutosSaleEnElSiguienteReinicio() {
+        assertFalse(ReglasAnuncios.tocaPorReinicio(3, 10, false, 60_000))
+        assertTrue(ReglasAnuncios.tocaPorReinicio(4, 10, false, 130_000))
+    }
+
+    @Test fun nuncaAntesDelNivel3NiConSinAnuncios() {
+        assertFalse(ReglasAnuncios.tocaPorReinicio(5, 2, false, 999_999))
+        assertTrue(ReglasAnuncios.tocaPorReinicio(5, 3, false, 999_999))
+        assertFalse(ReglasAnuncios.tocaPorReinicio(5, 10, true, 999_999))
+    }
+
     // ---------- registro de fallos en Firebase
 
     @Test fun cadaFalloSeAnotaUnaVezPorSesion() {

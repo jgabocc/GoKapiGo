@@ -30,6 +30,18 @@ object ReglasAnuncios {
     /** La consulta de consentimiento falló: se fuerza el arranque solo si el jugador está fuera de la zona RGPD. */
     fun forzarTrasFalloUmp(pais: String?): Boolean = fueraDeRgpd(pais)
 
+    /** Reinicios de nivel (botón reiniciar o «reintentar» tras perder) entre un intersticial y otro (dueño 2026-11-16). */
+    const val REINICIOS = 3
+    /** Desde el nivel 3, como el resto de intersticiales (regla del dueño 2026-11-04). */
+    const val NIVEL_MINIMO = 3
+
+    /**
+     * ¿Toca intersticial por reiniciar? Cada [REINICIOS] reinicios desde el último, desde el nivel [NIVEL_MINIMO], sin «Sin
+     * anuncios» y con 2 min desde el anterior. Si los 2 min no han pasado, la cuenta sigue y sale en el siguiente reinicio.
+     */
+    fun tocaPorReinicio(reiniciosDesdeUltimo: Int, nivel: Int, sinAnuncios: Boolean, msDesdeUltimoIntersticial: Long): Boolean =
+        reiniciosDesdeUltimo >= REINICIOS && nivel >= NIVEL_MINIMO && !sinAnuncios && msDesdeUltimoIntersticial >= 120_000
+
     /** Espera del intento número [intento] (0 = primer fallo). */
     fun espera(intento: Int): Long = ESPERAS_MS[intento.coerceIn(0, ESPERAS_MS.size - 1)]
 
